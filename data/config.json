@@ -1,0 +1,52 @@
+{
+  "site": {
+    "title": "A.CHOIRIL ANWAR EL-ASFIHANI RISYDABN",
+    "description": "Frontend Developer & UI/UX Designer. Membangun pengalaman web modern, interaktif, dan berdampak.",
+    "og_image": "/assets/images/og-image.png",
+    "favicon": "/assets/icons/favicon.ico",
+    "lang": "id"
+  },
+  "github": {
+    "username": "zeovarince",
+    "api_base": "https://api.github.com",
+    "contribution_graph": "https://ghchart.rshah.org/zeovarince",
+    "snake_dark": "https://raw.githubusercontent.com/zeovarince/zeovarince/output/github-contribution-grid-snake-dark.svg",
+    "stats_card": "https://github-readme-stats.vercel.app/api?username=zeovarince&show_icons=true&theme=dark&hide_border=true&bg_color=0C0C0C&title_color=D7E2EA&text_color=D7E2EA&icon_color=a855f7",
+    "lang_card": "https://github-readme-stats.vercel.app/api/top-langs/?username=zeovarince&layout=compact&theme=dark&hide_border=true&bg_color=0C0C0C&title_color=D7E2EA&text_color=D7E2EA"
+  },
+  "techstack": [
+    { "name": "HTML5",      "icon": "devicon-html5-plain",         "color": "#E34F26" },
+    { "name": "CSS3",       "icon": "devicon-css3-plain",          "color": "#1572B6" },
+    { "name": "JavaScript", "icon": "devicon-javascript-plain",    "color": "#F7DF1E" },
+    { "name": "TypeScript", "icon": "devicon-typescript-plain",    "color": "#3178C6" },
+    { "name": "React",      "icon": "devicon-react-original",      "color": "#61DAFB" },
+    { "name": "Tailwind",   "icon": "devicon-tailwindcss-plain",   "color": "#06B6D4" },
+    { "name": "Node.js",    "icon": "devicon-nodejs-plain",        "color": "#339933" },
+    { "name": "MySQL",      "icon": "devicon-mysql-plain",         "color": "#4479A1" },
+    { "name": "PHP",        "icon": "devicon-php-plain",           "color": "#777BB4" },
+    { "name": "Python",     "icon": "devicon-python-plain",        "color": "#3776AB" },
+    { "name": "C++",        "icon": "devicon-cplusplus-plain",     "color": "#00599C" },
+    { "name": "Git",        "icon": "devicon-git-plain",           "color": "#F05032" },
+    { "name": "Linux",      "icon": "devicon-linux-plain",         "color": "#FCC624" },
+    { "name": "Figma",      "icon": "devicon-figma-plain",         "color": "#F24E1E" },
+    { "name": "VS Code",    "icon": "devicon-vscode-plain",        "color": "#007ACC" },
+    { "name": "GitHub",     "icon": "devicon-github-original",     "color": "#ffffff" }
+  ],
+  "scroll_velocity_text": "FRONTEND • WEB DEVELOPMENT • UI/UX DESIGNER •",
+  "nav": [
+    { "id": "home",         "label": "Home",         "icon": "home" },
+    { "id": "about",        "label": "About",        "icon": "user" },
+    { "id": "techstack",    "label": "Tech Stack",   "icon": "code" },
+    { "id": "experience",   "label": "Experience",   "icon": "briefcase" },
+    { "id": "projects",     "label": "Projects",     "icon": "layers" },
+    { "id": "github",       "label": "GitHub",       "icon": "github" },
+    { "id": "certificates", "label": "Certificates", "icon": "award" },
+    { "id": "contact",      "label": "Contact",      "icon": "mail" }
+  ],
+  "contact": {
+    "email": "achoirilanwar01@gmail.com",
+    "instagram" : "2ez4rielz",
+    "github" : "zeovarince", 
+    "form_enabled": false
+  }
+}

@@ -1,0 +1,144 @@
+/* ==========================================================================
+   UTILITIES — Helper classes di luar Tailwind
+   ========================================================================== */
+
+/* Text gradient — sesuai template */
+.text-gradient {
+  background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.text-gradient-purple {
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Glassmorphism */
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Overflow clip (dari template) */
+.overflow-x-clip {
+  overflow-x: clip;
+}
+
+/* Glow effects */
+.glow-purple {
+  box-shadow:
+    0 0 20px rgba(168, 85, 247, 0.35),
+    0 0 40px rgba(236, 72, 153, 0.20);
+}
+
+.glow-sm {
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
+}
+
+/* Background glow blob */
+.glow-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+/* Noise texture overlay */
+.noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  pointer-events: none;
+}
+
+/* Visually hidden (accessibility) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* No select */
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Cursor none (untuk custom cursor) */
+.cursor-none {
+  cursor: none;
+}
+
+/* Pointer events none */
+.no-pointer {
+  pointer-events: none;
+}
+
+/* Smooth image */
+.img-smooth {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Truncate multiline */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Aspect ratio helpers */
+.aspect-portrait {
+  aspect-ratio: 3 / 4;
+}
+
+.aspect-landscape {
+  aspect-ratio: 16 / 9;
+}
+
+/* Grid auto-fill */
+.grid-auto-fill-sm {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.grid-auto-fill-md {
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+}
+
+/* Responsive gap */
+.gap-responsive {
+  gap: clamp(1rem, 3vw, 2rem);
+}

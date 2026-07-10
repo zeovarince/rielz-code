@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <!-- SEO -->
+  <title>Riel — Developer Portfolio</title>
+  <meta name="description" content="Frontend Developer & UI/UX Designer. Membangun pengalaman web modern, interaktif, dan berdampak." />
+  <meta name="author" content="A. Choiril Anwar El-Asfihani Risydan" />
+  <meta name="keywords" content="portfolio, frontend developer, UI/UX designer, web development, Madura, UTM" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Riel — Developer Portfolio" />
+  <meta property="og:description" content="Frontend Developer & UI/UX Designer." />
+  <meta property="og:image" content="/assets/images/og-image.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg" />
+  <link rel="icon" type="image/png" href="/assets/icons/favicon.png" />
+
+  <!-- Fonts: Kanit (heading) + Inter (body) via Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Devicon (tech stack icons) -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+  />
+
+  <!-- Tailwind CSS Play CDN — tidak perlu npm install atau build step -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            kanit: ["'Kanit'", "sans-serif"],
+            inter: ["'Inter'", "sans-serif"],
+          },
+          colors: {
+            "bg-primary":    "#0C0C0C",
+            "bg-secondary":  "#111111",
+            "bg-card":       "#161616",
+            "text-primary":  "#D7E2EA",
+            "accent-purple": "#a855f7",
+            "accent-pink":   "#ec4899",
+          },
+          fontSize: {
+            "fluid-hero": ["clamp(3rem, 17.5vw, 18rem)", { lineHeight: "1" }],
+            "fluid-xl":   ["clamp(2rem, 8vw, 8rem)",    { lineHeight: "1" }],
+            "fluid-lg":   ["clamp(1.5rem, 4vw, 4rem)",  { lineHeight: "1.1" }],
+            "fluid-md":   ["clamp(1rem, 2vw, 2rem)",    { lineHeight: "1.2" }],
+            "fluid-sm":   ["clamp(0.75rem, 1.4vw, 1.5rem)", { lineHeight: "1.4" }],
+          },
+          animation: {
+            "fade-in":       "fadeIn 0.7s cubic-bezier(0.25,0.1,0.25,1) forwards",
+            "slide-up":      "slideUp 0.7s cubic-bezier(0.25,0.1,0.25,1) forwards",
+            "marquee-left":  "marqueeLeft 30s linear infinite",
+            "marquee-right": "marqueeRight 30s linear infinite",
+            "float":         "float 6s ease-in-out infinite",
+            "pulse-glow":    "pulseGlow 3s ease-in-out infinite",
+          },
+          keyframes: {
+            fadeIn: {
+              "0%":   { opacity: "0" },
+              "100%": { opacity: "1" },
+            },
+            slideUp: {
+              "0%":   { opacity: "0", transform: "translateY(40px)" },
+              "100%": { opacity: "1", transform: "translateY(0)" },
+            },
+            marqueeLeft: {
+              "0%":   { transform: "translateX(0)" },
+              "100%": { transform: "translateX(-50%)" },
+            },
+            marqueeRight: {
+              "0%":   { transform: "translateX(-50%)" },
+              "100%": { transform: "translateX(0)" },
+            },
+            float: {
+              "0%, 100%": { transform: "translateY(0px)" },
+              "50%":      { transform: "translateY(-20px)" },
+            },
+            pulseGlow: {
+              "0%, 100%": { opacity: "0.6" },
+              "50%":      { opacity: "1" },
+            },
+          },
+          boxShadow: {
+            "glow-purple": "0 0 20px rgba(168,85,247,0.35), 0 0 40px rgba(236,72,153,0.20)",
+            "glow-sm":     "0 0 10px rgba(168,85,247,0.2)",
+            "card":        "0 4px 24px rgba(0,0,0,0.4)",
+            "card-hover":  "0 8px 40px rgba(0,0,0,0.6)",
+          },
+          backdropBlur: {
+            xs: "2px",
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Custom CSS (globals, components, animations, utilities) -->
+  <link rel="stylesheet" href="./styles/main.css" />
+
+  <!-- Theme color untuk browser UI (mobile) -->
+  <meta name="theme-color" content="#0C0C0C" />
+</head>
+
+<body class="loading cursor-none overflow-x-hidden">
+
+  <!-- =====================================================================
+       Splash Cursor — canvas overlay
+       ===================================================================== -->
+  <div id="splash-cursor" class="splash-cursor" aria-hidden="true">
+    <canvas id="splash-canvas"></canvas>
+  </div>
+
+  <!-- =====================================================================
+       Floating Dock Navigation
+       ===================================================================== -->
+  <nav id="floating-dock" aria-label="Navigasi utama">
+    <!-- Dirender oleh js/components/navbar.js -->
+  </nav>
+
+  <!-- =====================================================================
+       Main Content
+       ===================================================================== -->
+  <main id="app" class="overflow-x-clip">
+
+    <!-- HERO -->
+    <section id="home" class="relative">
+      <!-- Dirender oleh js/sections/hero.js -->
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section relative">
+      <div class="section-inner">
+        <!-- Dirender oleh js/sections/about.js -->
+      </div>
+    </section>
+
+    <!-- TECH STACK -->
+    <section id="techstack" class="relative overflow-x-clip">
+      <!-- Dirender oleh js/sections/techstack.js -->
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="section relative">
+      <div class="section-inner">
+        <!-- Dirender oleh js/sections/experience.js -->
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section relative">
+      <div class="section-inner">
+        <!-- Dirender oleh js/sections/projects.js -->
+      </div>
+    </section>
+
+    <!-- GITHUB -->
+    <section id="github" class="section relative">
+      <div class="section-inner">
+        <!-- Dirender oleh js/sections/github.js -->
+      </div>
+    </section>
+
+    <!-- CERTIFICATES -->
+    <section id="certificates" class="section relative">
+      <div class="section-inner">
+        <!-- Dirender oleh js/sections/certificates.js -->
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section relative">
+      <!-- Dirender oleh js/sections/contact.js -->
+    </section>
+
+  </main>
+
+  <!-- =====================================================================
+       Footer
+       ===================================================================== -->
+  <footer id="footer">
+    <!-- Dirender oleh js/components/footer.js -->
+  </footer>
+
+  <!-- =====================================================================
+       Scripts — type module untuk ES6 import/export
+       ===================================================================== -->
+  <script type="module" src="./js/app.js"></script>
+
+</body>
+</html>

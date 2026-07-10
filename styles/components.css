@@ -1,0 +1,149 @@
+/* ==========================================================================
+   COMPONENTS — Reusable UI component styles
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Button — Glassmorphism CTA (dari referensi template)
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  font-family: 'Kanit', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: clamp(0.7rem, 1.2vw, 0.875rem);
+  cursor: pointer;
+  border: none;
+  transition: transform var(--transition-base), box-shadow var(--transition-base), background var(--transition-base);
+  white-space: nowrap;
+}
+
+.btn:hover {
+  transform: scale(1.05) translateY(-2px);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-glass {
+  padding: 0.875rem 2.5rem;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    0 0 20px rgba(168, 85, 247, 0.35),
+    0 0 40px rgba(236, 72, 153, 0.20),
+    inset 0 1px 1px rgba(255, 255, 255, 0.12);
+}
+
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow:
+    0 0 30px rgba(168, 85, 247, 0.5),
+    0 0 60px rgba(236, 72, 153, 0.30),
+    inset 0 1px 1px rgba(255, 255, 255, 0.18);
+}
+
+.btn-outline {
+  padding: 0.875rem 2.5rem;
+  color: var(--text-primary);
+  background: transparent;
+  border: 1px solid var(--border-mid);
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   Card — Base card style
+   -------------------------------------------------------------------------- */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+  border-color: var(--border-mid);
+}
+
+/* Card dengan glassmorphism */
+.card-glass {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* --------------------------------------------------------------------------
+   Badge / Skill tag
+   -------------------------------------------------------------------------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.badge:hover {
+  background: rgba(168, 85, 247, 0.15);
+  border-color: rgba(168, 85, 247, 0.3);
+  color: var(--text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Section wrapper
+   -------------------------------------------------------------------------- */
+.section {
+  padding: clamp(4rem, 8vw, 10rem) 0;
+}
+
+.section-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 5vw, 5rem);
+}
+
+/* --------------------------------------------------------------------------
+   Divider
+   -------------------------------------------------------------------------- */
+.divider {
+  height: 1px;
+  background: var(--border-subtle);
+  margin: 2rem 0;
+}
+
+/* --------------------------------------------------------------------------
+   Tag / Label
+   -------------------------------------------------------------------------- */
+.label {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--text-dim);
+  margin-bottom: 1rem;
+}

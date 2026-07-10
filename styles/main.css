@@ -1,0 +1,17 @@
+/* ==========================================================================
+   MAIN.CSS — Entry point CSS utama
+   
+   File ini menggantikan input.css + output.css dari setup Tailwind CLI.
+   Tidak perlu build step — langsung di-link dari HTML.
+   
+   Urutan import penting:
+   1. globals   — design tokens, reset, typography dasar
+   2. components — UI components (button, card, badge, section)
+   3. animation  — keyframes dan observer state classes
+   4. utilities  — helper classes tambahan di luar Tailwind
+   ========================================================================== */
+
+@import "./globals.css";
+@import "./components.css";
+@import "./animation.css";
+@import "./utilities.css";

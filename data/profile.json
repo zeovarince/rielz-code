@@ -1,0 +1,30 @@
+{
+  "name": {
+    "full": "A. Choiril Anwar El-Asfihani Risydan",
+    "short": "Riel",
+    "display": "A.CHOIRIL ANWAR EL-ASFIHANI RISYDAN"
+  },
+  "title": [
+    "Frontend Developer",
+    "UI/UX Designer",
+    "Web Developer",
+    "Informatics Student"
+  ],
+  "bio": "Mahasiswa Teknik Informatika di Universitas Trunojoyo Madura yang passionate dalam membangun pengalaman web yang modern, interaktif, dan berdampak. Menggabungkan seni desain dengan logika pengembangan untuk menciptakan produk digital yang tidak hanya fungsional, tetapi juga memukau secara visual.",
+  "bio_short": "Code. Break. Fix. Learn. Repeat.",
+  "location": "Bangkalan, Madura, East Java — Indonesia",
+  "university": "Universitas Trunojoyo Madura",
+  "major": "Teknik Informatika",
+  "student_id": "240411100098",
+  "year": "2024",
+  "email": "achoirilanwar01@gmail.com",
+  "social": {
+    "github":    "https://github.com/zeovarince",
+    "linkedin":  "https://linkedin.com/in/choirilanwar",
+    "instagram": "https://instagram.com/2ez4rielz"
+  },
+  "availability": true,
+  "availability_text": "Open for internship & collaboration",
+  "cv": "/public/cv.pdf",
+  "avatar": "/assets/images/profile/avatar.png"
+}

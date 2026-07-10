@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "slug": "study-hub",
+    "title": "StudyHub",
+    "subtitle": "Platform kolaborasi belajar real-time",
+    "description": "Aplikasi web kolaborasi belajar dengan fitur real-time chat via Socket.io, musik/playlist bersama, sistem pertemanan, grup studi, dan StudyBot berbasis Google Gemini API.",
+    "long_description": "StudyHub adalah platform web full-stack yang dirancang untuk memfasilitasi sesi belajar bersama secara online. Dibangun dengan React/TypeScript di frontend dan Node.js/Express di backend, menggunakan MySQL sebagai database dan Socket.io untuk komunikasi real-time.",
+    "thumbnail": "/assets/images/projects/study-hub.png",
+    "images": [
+      "/assets/images/projects/study-hub-1.png",
+      "/assets/images/projects/study-hub-2.png"
+    ],
+    "tech": ["React", "TypeScript", "Node.js", "MySQL", "Socket.io", "Tailwind CSS"],
+    "category": "Full-Stack Web",
+    "year": "2025",
+    "status": "live",
+    "github_url": "https://github.com/zeovarince/study-hub",
+    "featured": true,
+    "order": 1
+  },
+  {
+    "id": 2,
+    "slug": "portal-tugas",
+    "title": "Student Task Portal",
+    "subtitle": "Portal pengumpulan tugas mahasiswa",
+    "description": "Portal web native PHP/MySQL untuk pengumpulan tugas mahasiswa dengan UI dark-mode ala VS Code, manajemen mata kuliah, dan sistem upload file.",
+    "long_description": "Sistem informasi berbasis web menggunakan PHP native dan MySQL untuk mengelola pengumpulan tugas mahasiswa. Didesain dengan estetika VS Code dark-mode dan fitur manajemen lengkap untuk dosen dan mahasiswa.",
+    "thumbnail": "/assets/images/projects/portal-tugas.png",
+    "images": [],
+    "tech": ["PHP", "MySQL", "HTML", "CSS", "JavaScript"],
+    "category": "Web Application",
+    "year": "2024",
+    "status": "completed",
+    "live_url": null,
+    "github_url": "https://github.com/zeovarince/portal-tugas",
+    "featured": false,
+    "order": 2
+  },
+  {
+    "id": 3,
+    "slug": "upabk-portal",
+    "title": "UPA-BK UTM Portal",
+    "subtitle": "Portal konseling digital UTM",
+    "description": "Portal digital Unit Pelaksana Akademik Bimbingan dan Konseling UTM dibangun dengan React/TypeScript dan Tailwind CSS untuk layanan konseling mahasiswa.",
+    "long_description": "Pengembangan portal web resmi UPA-BK Universitas Trunojoyo Madura menggunakan React, TypeScript, dan Tailwind CSS. Menyediakan fitur informasi layanan konseling, jadwal, dan kontak konselor.",
+    "thumbnail": "/assets/images/projects/upabk.png",
+    "images": [],
+    "tech": ["React", "TypeScript", "Tailwind CSS"],
+    "category": "Web Development",
+    "year": "2024",
+    "status": "live",
+    "live_url": null,
+    "github_url": "https://github.com/zeovarince/upabk-portal",
+    "featured": false,
+    "order": 3
+  }
+]

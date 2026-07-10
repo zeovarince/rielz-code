@@ -1,0 +1,59 @@
+[
+  {
+    "id": 1,
+    "organization": "UKMFT-ITC",
+    "organization_full": "Unit Kegiatan Mahasiswa Fakultas Teknik — Information Technology Community",
+    "logo": "/assets/images/organizations/ukmft-itc.png",
+    "position": "Ketua Pelaksana Diklat Anggota Muda (INFINITE)",
+    "period": "2026",
+    "period_start": "2026-05",
+    "period_end": "2026-10",
+    "location": "Universitas Trunojoyo Madura",
+    "type": "organizational",
+    "description": "Memimpin pelaksanaan program kaderisasi anggota muda INFINITE, mengoordinasikan seluruh panitia, menyusun timeline kegiatan, serta memastikan acara berjalan sesuai rencana dari tahap persiapan hingga evaluasi akhir.",
+    "skills": [
+      "Leadership",
+      "Project Management",
+      "Communication",
+      "Event Management"
+    ]
+  },
+  {
+    "id": 2,
+    "organization": "UKMFT-ITC",
+    "organization_full": "Unit Kegiatan Mahasiswa Fakultas Teknik — Information Technology Community",
+    "logo": "/assets/images/organizations/ukmft-itc.png",
+    "position": "Sekretaris Divisi Pengkaderan",
+    "period": "2025",
+    "period_start": "2025-02",
+    "period_end": "2025-12",
+    "location": "Universitas Trunojoyo Madura",
+    "type": "organizational",
+    "description": "Mengelola administrasi divisi pengkaderan, notulensi rapat, serta membantu koordinasi program kerja pengkaderan organisasi.",
+    "skills": [
+      "Administration",
+      "Documentation",
+      "Teamwork",
+      "Communication"
+    ]
+  },
+  {
+    "id": 3,
+    "organization": "KOALISI",
+    "organization_full": "Komunitas Linux Siber Teknologi Informasi",
+    "logo": "/assets/images/organizations/koalisi.png",
+    "position": "Sekretaris Badan Pengurus Harian",
+    "period": "2026 – Sekarang",
+    "period_start": "2026-01",
+    "period_end": null,
+    "location": "Universitas Trunojoyo Madura",
+    "type": "organizational",
+    "description": "Bertanggung jawab terhadap administrasi organisasi komunitas Linux dan siber, pengarsipan dokumen resmi, notulensi rapat BPH, serta membantu koordinasi antar pengurus dalam pelaksanaan program kerja.",
+    "skills": [
+      "Administration",
+      "Documentation",
+      "Teknologi",
+      "Organization"
+    ]
+  }
+]
