@@ -1,10 +1,10 @@
-/* ==========================================================================
+/*
    ANIMATION — Keyframes dan animation utility classes
-   ========================================================================== */
+   */
 
-/* --------------------------------------------------------------------------
+/*
    Keyframes
-   -------------------------------------------------------------------------- */
+   */
 @keyframes fadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
@@ -92,9 +92,9 @@
   to   { stroke-dashoffset: 0; }
 }
 
-/* --------------------------------------------------------------------------
+/*
    FadeIn observer states (digunakan oleh animation.js)
-   -------------------------------------------------------------------------- */
+   */
 
 /* Elemen sebelum masuk viewport: tersembunyi */
 .fade-in-hidden {
@@ -131,31 +131,28 @@
 .delay-700 { transition-delay: 700ms; }
 .delay-800 { transition-delay: 800ms; }
 
-/* --------------------------------------------------------------------------
-   Splash Cursor Styles
-   -------------------------------------------------------------------------- */
-.splash-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: var(--z-cursor);
+#home {
+  position: relative;
   overflow: hidden;
 }
 
-.splash-cursor canvas {
+.hero-splash {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
+  z-index: 0;
+  pointer-events: none;
 }
 
-/* --------------------------------------------------------------------------
+.hero-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+/*
    Loading / Skeleton
-   -------------------------------------------------------------------------- */
+   */
 .skeleton {
   background: linear-gradient(
     90deg,
@@ -168,51 +165,269 @@
   border-radius: var(--radius-sm);
 }
 
-/* --------------------------------------------------------------------------
-   Scroll Velocity (Marquee) container
-   -------------------------------------------------------------------------- */
-.scroll-velocity-wrapper {
+
+/*
+   HERO SECTION — Styles
+   */
+
+/* ── Wrapper utama hero (h-screen, flex column) ── */
+.hero-wrapper {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
+  background: var(--bg-primary);
+  padding: 0 clamp(1.5rem, 5vw, 5rem);
+}
+
+/* ── Ambient glow blobs ── */
+.hero-blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(100px);
+  animation: pulseGlow 5s ease-in-out infinite;
+  z-index: 0;
+}
+.hero-blob--purple {
+  width: clamp(300px, 40vw, 600px);
+  height: clamp(300px, 40vw, 600px);
+  background: rgba(168, 85, 247, 0.12);
+  top: -10%;
+  right: -5%;
+  animation-delay: 0s;
+}
+.hero-blob--pink {
+  width: clamp(200px, 30vw, 450px);
+  height: clamp(200px, 30vw, 450px);
+  background: rgba(236, 72, 153, 0.08);
+  bottom: 20%;
+  left: -5%;
+  animation-delay: 2.5s;
+}
+
+/* ── Heading wrap ── */
+.hero-heading-wrap {
+  position: relative;
+  z-index: 3;
+  margin-top: clamp(1.5rem, 4vw, 3rem);
+  overflow: hidden;
+}
+
+/* ── Nama besar ── */
+.hero-name {
+  font-family: 'Kanit', sans-serif;
+  font-size: clamp(3rem, 12vw, 12rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
   white-space: nowrap;
+  width: 100%;
+  background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* ── Marquee Stack (dua strip, membelakangi avatar) ── */
+.hero-marquee-stack {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 5%;
+  gap: 14px;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
   mask-image: linear-gradient(
     to right,
     transparent 0%,
-    black 10%,
-    black 90%,
+    black 8%,
+    black 92%,
     transparent 100%
   );
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0%,
-    black 10%,
-    black 90%,
+    black 8%,
+    black 92%,
     transparent 100%
   );
 }
 
-.scroll-velocity-track {
+.hero-marquee-row {
+  width: 100%;
+  overflow: hidden;
+}
+
+.hero-marquee-track {
   display: inline-flex;
-  gap: 0;
+  width: max-content;
   will-change: transform;
 }
 
-.scroll-velocity-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 0 1.5rem;
-  font-family: 'Kanit', sans-serif;
-  font-weight: 700;
-  font-size: clamp(1rem, 2.5vw, 1.75rem);
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--text-muted);
+.hero-marquee-track--ltr {
+  animation: marqueeLeft 60s linear infinite;
 }
 
-.scroll-velocity-dot {
+.hero-marquee-track--rtl {
+  animation: marqueeRight 60s linear infinite;
+}
+
+.hero-marquee-item {
+  display: inline-block;
+  font-family: 'Kanit', sans-serif;
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  padding-right: 80px;
+  color: rgba(255, 255, 255, 0.26);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ── Avatar wrap — absolute center ── */
+.hero-avatar-wrap {
+  position: absolute;
+  left: 20%;
+  top: 20%;
+  transform: translate(-50%, -40%);
+  z-index: 3;
+  pointer-events: none;
+  width: clamp(320px, 40vw, 680px)
+}
+.hero-magnet {
+  width: 100%;
+  will-change: transform;
+}
+.hero-avatar {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+  filter: drop-shadow(0 20px 60px rgba(168, 85, 247, 0.15));
+}
+
+/* ── Bottom bar ── */
+.hero-bottom {
+  position: relative;
+  z-index: 3;
+  margin-top: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-bottom: clamp(2rem, 5vw, 4rem);
+  gap: 2rem;
+}
+
+/* ── Bio kiri ── */
+.hero-bio {
+  font-family: 'Kanit', sans-serif;
+  font-size: clamp(0.7rem, 1.3vw, 1.1rem);
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1.7;
+  color: var(--text-muted);
+  max-width: clamp(180px, 22vw, 280px);
+}
+
+/* ── CTA kanan ── */
+.hero-cta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+.hero-cta__explore {
+  /* btn-glass sudah di components.css */
+}
+.hero-cta__cv {
+  /* btn-outline sudah di components.css */
+}
+
+/* ── Availability badge ── */
+.hero-available {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
+  background: rgba(255,255,255,0.03);
+}
+.hero-available__dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: rgba(168, 85, 247, 0.6);
+  background: #22c55e;
   flex-shrink: 0;
+  box-shadow: 0 0 6px rgba(34,197,94,0.7);
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE — Mobile
+══════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .hero-name {
+    font-size: clamp(3.5rem, 20vw, 6rem);
+    white-space: normal;
+    line-height: 0.92;
+  }
+  .hero-avatar-wrap {
+    position: static;
+    transform: none;
+    width: clamp(180px, 60vw, 300px);
+    margin: 1.5rem auto 0;
+    pointer-events: auto;
+  }
+  .hero-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: clamp(1.5rem, 5vw, 3rem);
+    gap: 1.5rem;
+  }
+  .hero-bio {
+    max-width: 100%;
+  }
+  .hero-cta {
+    width: 100%;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .hero-cta .btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+  .hero-blob--purple { opacity: 0.6; }
+  .hero-blob--pink   { opacity: 0.5; }
+
+  .hero-marquee-item {
+    font-size: clamp(1.4rem, 6vw, 2.5rem);
+    padding-right: 40px;
+  }
+  .hero-marquee-stack {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-name {
+    font-size: clamp(2.8rem, 22vw, 5rem);
+  }
 }

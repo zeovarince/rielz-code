@@ -13,30 +13,25 @@
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Riel — Developer Portfolio" />
+  <meta property="og:title" content="Choiril — Developer Portfolio" />
   <meta property="og:description" content="Frontend Developer & UI/UX Designer." />
   <meta property="og:image" content="/assets/images/og-image.png" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg" />
-  <link rel="icon" type="image/png" href="/assets/icons/favicon.png" />
+  <link rel="icon" type="image/png" sizes="64x64" href="./assets/icons/favicon_128x128.png" />
 
-  <!-- Fonts: Kanit (heading) + Inter (body) via Google Fonts -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-  <!-- Devicon (tech stack icons) -->
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
-  />
+  <!-- Devicon -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
 
-  <!-- Tailwind CSS Play CDN — tidak perlu npm install atau build step -->
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Config -->
   <script>
     tailwind.config = {
       theme: {
@@ -46,159 +41,129 @@
             inter: ["'Inter'", "sans-serif"],
           },
           colors: {
-            "bg-primary":    "#0C0C0C",
-            "bg-secondary":  "#111111",
-            "bg-card":       "#161616",
-            "text-primary":  "#D7E2EA",
+            "bg-primary": "#0C0C0C",
+            "bg-secondary": "#111111",
+            "bg-card": "#161616",
+            "text-primary": "#D7E2EA",
             "accent-purple": "#a855f7",
-            "accent-pink":   "#ec4899",
-          },
-          fontSize: {
-            "fluid-hero": ["clamp(3rem, 17.5vw, 18rem)", { lineHeight: "1" }],
-            "fluid-xl":   ["clamp(2rem, 8vw, 8rem)",    { lineHeight: "1" }],
-            "fluid-lg":   ["clamp(1.5rem, 4vw, 4rem)",  { lineHeight: "1.1" }],
-            "fluid-md":   ["clamp(1rem, 2vw, 2rem)",    { lineHeight: "1.2" }],
-            "fluid-sm":   ["clamp(0.75rem, 1.4vw, 1.5rem)", { lineHeight: "1.4" }],
-          },
-          animation: {
-            "fade-in":       "fadeIn 0.7s cubic-bezier(0.25,0.1,0.25,1) forwards",
-            "slide-up":      "slideUp 0.7s cubic-bezier(0.25,0.1,0.25,1) forwards",
-            "marquee-left":  "marqueeLeft 30s linear infinite",
-            "marquee-right": "marqueeRight 30s linear infinite",
-            "float":         "float 6s ease-in-out infinite",
-            "pulse-glow":    "pulseGlow 3s ease-in-out infinite",
-          },
-          keyframes: {
-            fadeIn: {
-              "0%":   { opacity: "0" },
-              "100%": { opacity: "1" },
-            },
-            slideUp: {
-              "0%":   { opacity: "0", transform: "translateY(40px)" },
-              "100%": { opacity: "1", transform: "translateY(0)" },
-            },
-            marqueeLeft: {
-              "0%":   { transform: "translateX(0)" },
-              "100%": { transform: "translateX(-50%)" },
-            },
-            marqueeRight: {
-              "0%":   { transform: "translateX(-50%)" },
-              "100%": { transform: "translateX(0)" },
-            },
-            float: {
-              "0%, 100%": { transform: "translateY(0px)" },
-              "50%":      { transform: "translateY(-20px)" },
-            },
-            pulseGlow: {
-              "0%, 100%": { opacity: "0.6" },
-              "50%":      { opacity: "1" },
-            },
-          },
-          boxShadow: {
-            "glow-purple": "0 0 20px rgba(168,85,247,0.35), 0 0 40px rgba(236,72,153,0.20)",
-            "glow-sm":     "0 0 10px rgba(168,85,247,0.2)",
-            "card":        "0 4px 24px rgba(0,0,0,0.4)",
-            "card-hover":  "0 8px 40px rgba(0,0,0,0.6)",
-          },
-          backdropBlur: {
-            xs: "2px",
-          },
-        },
-      },
+            "accent-pink": "#ec4899",
+          }
+        }
+      }
     };
   </script>
 
-  <!-- Custom CSS (globals, components, animations, utilities) -->
   <link rel="stylesheet" href="./styles/main.css" />
 
-  <!-- Theme color untuk browser UI (mobile) -->
-  <meta name="theme-color" content="#0C0C0C" />
+  <meta name="theme-color" content="#0C0C0C">
 </head>
 
-<body class="loading cursor-none overflow-x-hidden">
+<body class="loading overflow-x-hidden">
+    <!-- Floating Navigation -->
+    <nav id="floating-dock"></nav>
 
-  <!-- =====================================================================
-       Splash Cursor — canvas overlay
-       ===================================================================== -->
-  <div id="splash-cursor" class="splash-cursor" aria-hidden="true">
-    <canvas id="splash-canvas"></canvas>
-  </div>
+    <!-- Main -->
+    <main id="app">
 
-  <!-- =====================================================================
-       Floating Dock Navigation
-       ===================================================================== -->
-  <nav id="floating-dock" aria-label="Navigasi utama">
-    <!-- Dirender oleh js/components/navbar.js -->
-  </nav>
+        <!-- Hero -->
+        <section id="home" class="relative"></section>
 
-  <!-- =====================================================================
-       Main Content
-       ===================================================================== -->
-  <main id="app" class="overflow-x-clip">
+        <!-- About -->
+        <section id="about" class="section">
+            <div class="section-inner"></div>
+        </section>
 
-    <!-- HERO -->
-    <section id="home" class="relative">
-      <!-- Dirender oleh js/sections/hero.js -->
-    </section>
+        <!-- Tech Stack -->
+        <section id="techstack"></section>
 
-    <!-- ABOUT -->
-    <section id="about" class="section relative">
-      <div class="section-inner">
-        <!-- Dirender oleh js/sections/about.js -->
-      </div>
-    </section>
+        <!-- Experience -->
+        <section id="experience" class="section">
+            <div class="section-inner"></div>
+        </section>
 
-    <!-- TECH STACK -->
-    <section id="techstack" class="relative overflow-x-clip">
-      <!-- Dirender oleh js/sections/techstack.js -->
-    </section>
+        <!-- Projects -->
+        <section id="projects" class="section">
+            <div class="section-inner"></div>
+        </section>
 
-    <!-- EXPERIENCE -->
-    <section id="experience" class="section relative">
-      <div class="section-inner">
-        <!-- Dirender oleh js/sections/experience.js -->
-      </div>
-    </section>
+        <!-- Github -->
+        <section id="github" class="section">
+            <div class="section-inner"></div>
+        </section>
 
-    <!-- PROJECTS -->
-    <section id="projects" class="section relative">
-      <div class="section-inner">
-        <!-- Dirender oleh js/sections/projects.js -->
-      </div>
-    </section>
+        <!-- Certificates -->
+        <section id="certificates" class="section">
+            <div class="section-inner"></div>
+        </section>
 
-    <!-- GITHUB -->
-    <section id="github" class="section relative">
-      <div class="section-inner">
-        <!-- Dirender oleh js/sections/github.js -->
-      </div>
-    </section>
+        <!-- Contact -->
+        <section id="contact"></section>
 
-    <!-- CERTIFICATES -->
-    <section id="certificates" class="section relative">
-      <div class="section-inner">
-        <!-- Dirender oleh js/sections/certificates.js -->
-      </div>
-    </section>
+    </main>
 
-    <!-- CONTACT -->
-    <section id="contact" class="section relative">
-      <!-- Dirender oleh js/sections/contact.js -->
-    </section>
+    <!-- Footer -->
+    <footer id="footer"></footer>
 
-  </main>
+    <!-- Cursor Script -->
+    <script>
+    (function(){
 
-  <!-- =====================================================================
-       Footer
-       ===================================================================== -->
-  <footer id="footer">
-    <!-- Dirender oleh js/components/footer.js -->
-  </footer>
+      const dot=document.getElementById("cursor-dot");
+      const ring=document.getElementById("cursor-ring");
 
-  <!-- =====================================================================
-       Scripts — type module untuk ES6 import/export
-       ===================================================================== -->
-  <script type="module" src="./js/app.js"></script>
+      let mouseX=0;
+      let mouseY=0;
+
+      let ringX=0;
+      let ringY=0;
+
+      document.addEventListener("mousemove",(e)=>{
+          mouseX=e.clientX;
+          mouseY=e.clientY;
+
+          dot.style.left=mouseX+"px";
+          dot.style.top=mouseY+"px";
+      });
+
+      function animate(){
+
+          ringX+=(mouseX-ringX)*0.12;
+          ringY+=(mouseY-ringY)*0.12;
+
+          ring.style.left=ringX+"px";
+          ring.style.top=ringY+"px";
+
+          requestAnimationFrame(animate);
+      }
+
+      animate();
+
+      document.addEventListener("mouseover",(e)=>{
+          if(e.target.closest("a,button")){
+
+              dot.style.width="14px";
+              dot.style.height="14px";
+
+              ring.style.width="50px";
+              ring.style.height="50px";
+          }
+      });
+
+      document.addEventListener("mouseout",(e)=>{
+          if(e.target.closest("a,button")){
+
+              dot.style.width="8px";
+              dot.style.height="8px";
+
+              ring.style.width="36px";
+              ring.style.height="36px";
+          }
+      });
+
+    })();
+    </script>
+
+    <script type="module" src="./js/app.js"></script>
 
 </body>
 </html>

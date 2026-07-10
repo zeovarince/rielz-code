@@ -1,12 +1,9 @@
 /**
  * app.js — Entry point utama portfolio
- * 
- * Mengatur inisialisasi semua section dan komponen.
- * Import section secara berurutan sesuai phase pengembangan.
  */
 
 import { fetchAllData } from './utils/fetch.js';
-import { initFadeIn } from './utils/animation.js';
+import { initFadeIn }   from './utils/animation.js';
 import { prefersReducedMotion } from './utils/helper.js';
 
 // Components
@@ -23,21 +20,14 @@ import { initGitHub }       from './sections/github.js';
 import { initCertificates } from './sections/certificates.js';
 import { initContact }      from './sections/contact.js';
 
-/**
- * State global — data JSON yang di-fetch sekali, dipakai semua section.
- */
 let appData = null;
 
-/**
- * Inisialisasi semua modul dengan data yang sudah di-fetch.
- * @param {Object} data
- */
 function initModules(data) {
   // Core layout
   initNavbar(data.config);
   initFooter(data.profile);
 
-  // Sections — urutan sesuai tampilan halaman
+  // Sections
   initHero(data.profile, data.config);
   initAbout(data.profile);
   initTechStack(data.config.techstack);
@@ -47,34 +37,26 @@ function initModules(data) {
   initCertificates(data.certificates);
   initContact(data.profile, data.config.contact);
 
-  // Global animations (after all HTML di-render)
+  // Global fade-in observer (untuk section selanjutnya)
   if (!prefersReducedMotion()) {
-    initFadeIn('.fade-in-hidden');
+    setTimeout(() => initFadeIn('.fade-in-hidden'), 100);
   }
 }
 
-/**
- * Bootstrap aplikasi.
- */
 async function bootstrap() {
   try {
-    // Fetch semua data JSON paralel
     appData = await fetchAllData();
-
-    // Render semua section
     initModules(appData);
-
-    // Hapus loading state jika ada
     document.body.classList.add('loaded');
     document.body.classList.remove('loading');
-
   } catch (err) {
     console.error('[App] Bootstrap failed:', err);
+    // Tetap hapus loading agar halaman tidak blank total
+    document.body.classList.remove('loading');
     document.body.classList.add('error');
   }
 }
 
-// Jalankan saat DOM siap
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', bootstrap);
 } else {

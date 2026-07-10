@@ -1,9 +1,0 @@
-/* ==========================================================================
-   INPUT.CSS — File ini sudah tidak digunakan dalam setup CDN.
-   
-   Setup sebelumnya menggunakan Tailwind CLI yang memerlukan:
-     npx tailwindcss -i ./styles/input.css -o ./styles/output.css
-   
-   Sekarang menggunakan Tailwind Play CDN via <script> di HTML.
-   Entry point CSS utama ada di: styles/main.css
-   ========================================================================== */

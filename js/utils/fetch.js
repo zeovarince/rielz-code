@@ -7,23 +7,38 @@
 const _cache = new Map();
 
 /**
+ * Resolve path JSON relatif terhadap lokasi index.html.
+ * Mendukung baik server (http://) maupun file:// protocol.
+ */
+function resolvePath(path) {
+  // Jika sudah absolute URL, gunakan langsung
+  if (path.startsWith('http')) return path;
+  // Relatif terhadap root dokumen
+  const base = window.location.href.replace(/\/[^/]*$/, '/');
+  // Normalkan path: hilangkan leading slash jika pakai file://
+  if (window.location.protocol === 'file:') {
+    return new URL(path.replace(/^\//, ''), base).href;
+  }
+  return path;
+}
+
+/**
  * Fetch JSON dari path, dengan cache.
- * @param {string} path - URL atau path relatif ke file JSON
+ * @param {string} path
  * @returns {Promise<any>}
  */
 export async function fetchJSON(path) {
-  if (_cache.has(path)) {
-    return _cache.get(path);
-  }
+  const resolved = resolvePath(path);
+  if (_cache.has(resolved)) return _cache.get(resolved);
 
   try {
-    const res = await fetch(path);
-    if (!res.ok) throw new Error(`HTTP ${res.status}: ${path}`);
+    const res = await fetch(resolved);
+    if (!res.ok) throw new Error(`HTTP ${res.status}: ${resolved}`);
     const data = await res.json();
-    _cache.set(path, data);
+    _cache.set(resolved, data);
     return data;
   } catch (err) {
-    console.error(`[fetchJSON] Failed to load ${path}:`, err);
+    console.error(`[fetchJSON] Failed to load ${resolved}:`, err);
     throw err;
   }
 }
@@ -40,7 +55,6 @@ export async function fetchAllData() {
     fetchJSON('/data/certificates.json'),
     fetchJSON('/data/config.json'),
   ]);
-
   return { profile, experience, projects, certificates, config };
 }
 
@@ -50,8 +64,7 @@ export async function fetchAllData() {
  * @returns {Promise<Array>}
  */
 export async function fetchGitHubRepos(username) {
-  const url = `https://api.github.com/users/${username}/repos?sort=updated&per_page=6&type=public`;
-  return fetchJSON(url);
+  return fetchJSON(`https://api.github.com/users/${username}/repos?sort=updated&per_page=6&type=public`);
 }
 
 /**
@@ -60,8 +73,7 @@ export async function fetchGitHubRepos(username) {
  * @returns {Promise<Array>}
  */
 export async function fetchGitHubEvents(username) {
-  const url = `https://api.github.com/users/${username}/events/public?per_page=10`;
-  return fetchJSON(url);
+  return fetchJSON(`https://api.github.com/users/${username}/events/public?per_page=10`);
 }
 
 /**
@@ -70,6 +82,5 @@ export async function fetchGitHubEvents(username) {
  * @returns {Promise<Object>}
  */
 export async function fetchGitHubUser(username) {
-  const url = `https://api.github.com/users/${username}`;
-  return fetchJSON(url);
+  return fetchJSON(`https://api.github.com/users/${username}`);
 }
