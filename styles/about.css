@@ -1,0 +1,295 @@
+/* ==========================================================================
+   ABOUT.CSS — About Section styles
+   ========================================================================== */
+
+/* ── Grid layout: 2 kolom di desktop, 1 kolom di mobile ── */
+.about-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: clamp(3rem, 6vw, 6rem);
+  align-items: start;
+  margin-top: 3rem;
+}
+
+/* ══════════════════════════════════════════
+   KIRI — Avatar + info
+══════════════════════════════════════════ */
+.about-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  position: sticky;
+  top: 6rem;
+}
+
+/* ── Avatar frame ── */
+.about-avatar-frame {
+  position: relative;
+  width: 100%;
+  max-width: 280px;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+}
+
+.about-avatar {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.5s ease;
+}
+
+.about-avatar-frame:hover .about-avatar {
+  transform: scale(1.03);
+}
+
+/* Glow ring di belakang avatar */
+.about-avatar-glow {
+  position: absolute;
+  inset: -2px;
+  border-radius: 1.5rem;
+  background: linear-gradient(
+    135deg,
+    rgba(168, 85, 247, 0.3),
+    rgba(236, 72, 153, 0.15),
+    transparent 60%
+  );
+  z-index: -1;
+  filter: blur(12px);
+  pointer-events: none;
+}
+
+/* ── Availability badge ── */
+.about-availability {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  background: rgba(34, 197, 94, 0.05);
+  width: 100%;
+  max-width: 280px;
+  justify-content: center;
+}
+
+.about-availability__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  flex-shrink: 0;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
+  animation: availPulse 2s ease-in-out infinite;
+}
+
+@keyframes availPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(34,197,94,0.8); }
+  50%       { opacity: 0.7; box-shadow: 0 0 14px rgba(34,197,94,0.5); }
+}
+
+/* ── Meta info (lokasi, universitas) ── */
+.about-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 280px;
+}
+
+.about-meta__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.about-meta__row svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: rgba(168, 85, 247, 0.7);
+}
+
+/* ── Social links ── */
+.about-social {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.about-social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-muted);
+  transition:
+    background  var(--transition-base),
+    border-color var(--transition-base),
+    color       var(--transition-base),
+    transform   var(--transition-base);
+}
+
+.about-social-link:hover {
+  background: rgba(168, 85, 247, 0.12);
+  border-color: rgba(168, 85, 247, 0.35);
+  color: #c084fc;
+  transform: translateY(-3px);
+}
+
+/* ══════════════════════════════════════════
+   KANAN — Teks
+══════════════════════════════════════════ */
+.about-right {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ── Heading ── */
+.about-heading {
+  font-family: 'Kanit', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: var(--text-primary);
+}
+
+/* ── Bio ── */
+.about-bio {
+  font-size: clamp(0.9rem, 1.3vw, 1.05rem);
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.85;
+  max-width: 600px;
+}
+
+/* ── Stats row ── */
+.about-stats {
+  display: flex;
+  gap: 2.5rem;
+  align-items: flex-start;
+}
+
+.about-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.about-stat__value {
+  font-family: 'Kanit', sans-serif;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 800;
+  line-height: 1;
+  background: linear-gradient(135deg, #c084fc 0%, #f472b6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.about-stat__label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+/* ── Title tags ── */
+.about-titles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.about-title-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  transition: background var(--transition-base), border-color var(--transition-base), color var(--transition-base);
+}
+
+.about-title-tag:hover {
+  background: rgba(168, 85, 247, 0.1);
+  border-color: rgba(168, 85, 247, 0.3);
+  color: #c084fc;
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE — Tablet & Mobile
+══════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .about-grid {
+    grid-template-columns: 260px 1fr;
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .about-left {
+    position: static;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .about-avatar-frame {
+    max-width: 220px;
+  }
+
+  .about-availability,
+  .about-meta {
+    max-width: 100%;
+  }
+
+  .about-heading {
+    font-size: clamp(2rem, 8vw, 3.5rem);
+  }
+
+  .about-stats {
+    gap: 1.5rem;
+  }
+
+  .about-stat__value {
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .about-stats {
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+}

@@ -1,0 +1,175 @@
+/* ==========================================================================
+   TECHSTACK.CSS — Tech Stack Section
+   ========================================================================== */
+
+/* ── Section wrapper ── */
+#techstack {
+  padding: clamp(4rem, 8vw, 10rem) 0;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Subtle top/bottom separator */
+#techstack::before,
+#techstack::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--border-subtle);
+}
+#techstack::before { top: 0; }
+#techstack::after  { bottom: 0; }
+
+/* ── Inner wrapper ── */
+.ts-inner {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 5vw, 4rem);
+}
+
+/* ── Header ── */
+.ts-header {
+  text-align: center;
+}
+
+.ts-heading {
+  font-family: 'Kanit', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.ts-subheading {
+  font-size: clamp(0.85rem, 1.3vw, 1rem);
+  color: var(--text-dim);
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ── Rows container ── */
+.ts-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ── Satu row marquee ── */
+.ts-marquee-wrapper {
+  overflow: hidden;
+  /* Fade mask kiri & kanan */
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+}
+
+/* ── Track (digerakkan JS) ── */
+.ts-marquee-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+/* ── Single tech item ── */
+.ts-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  margin: 0 0.5rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition:
+    border-color var(--transition-base),
+    background   var(--transition-base),
+    transform    var(--transition-base),
+    box-shadow   var(--transition-base);
+  cursor: default;
+}
+
+.ts-item:hover {
+  border-color: var(--border-mid);
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Icon ── */
+.ts-item__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+}
+
+.ts-item__icon i {
+  font-size: 1.6rem;
+  transition: filter var(--transition-base), transform var(--transition-base);
+}
+
+.ts-item:hover .ts-item__icon i {
+  filter: drop-shadow(0 0 8px currentColor);
+  transform: scale(1.1);
+}
+
+/* ── Nama tech ── */
+.ts-item__name {
+  font-family: 'Kanit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  transition: color var(--transition-base);
+}
+
+.ts-item:hover .ts-item__name {
+  color: var(--text-primary);
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .ts-item {
+    padding: 0.6rem 1.1rem;
+    margin: 0 0.35rem;
+    gap: 0.6rem;
+  }
+
+  .ts-item__icon {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+
+  .ts-item__icon i {
+    font-size: 1.3rem;
+  }
+
+  .ts-item__name {
+    font-size: 0.8rem;
+  }
+}

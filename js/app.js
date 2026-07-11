@@ -62,3 +62,16 @@ if (document.readyState === 'loading') {
 } else {
   bootstrap();
 }
+
+/* ── Experience in-view observer (progress bar & counter visibility) ── */
+(function initExpInView() {
+  const section = document.getElementById('experience');
+  if (!section) return;
+  const obs = new IntersectionObserver(
+    ([entry]) => {
+      section.classList.toggle('in-view', entry.isIntersecting);
+    },
+    { threshold: 0.05 }
+  );
+  obs.observe(section);
+})();
