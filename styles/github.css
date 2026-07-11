@@ -1,0 +1,285 @@
+/* ==========================================================================
+   GITHUB.CSS — GitHub Section
+   ========================================================================== */
+
+/* ── Header ── */
+.gh-header {
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.gh-profile-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
+  background: rgba(255,255,255,0.03);
+  transition: background var(--transition-base), border-color var(--transition-base), color var(--transition-base);
+  text-decoration: none;
+}
+
+.gh-profile-link:hover {
+  background: rgba(168,85,247,0.1);
+  border-color: rgba(168,85,247,0.3);
+  color: #c084fc;
+}
+
+/* ── Section label ── */
+.gh-section-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-dim);
+  margin-bottom: 1rem;
+}
+
+/* ════════════════════════════
+   STATS ROW
+════════════════════════════ */
+.gh-stats-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1rem, 2vw, 1.5rem);
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.gh-stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  min-height: 120px;
+}
+
+.gh-stat-card:hover {
+  border-color: rgba(168,85,247,0.2);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+.gh-stat-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0.5rem;
+}
+
+.gh-stat-card.gh-img-error::after {
+  content: 'Stats tidak tersedia';
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ════════════════════════════
+   CONTRIBUTION GRAPH
+════════════════════════════ */
+.gh-contrib-wrap {
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.gh-contrib-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  padding: 1.5rem;
+  transition: border-color var(--transition-base);
+}
+
+.gh-contrib-card:hover {
+  border-color: rgba(168,85,247,0.2);
+}
+
+.gh-contrib-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0.5rem;
+  filter: brightness(0.9) contrast(1.1);
+}
+
+/* ════════════════════════════
+   SNAKE ANIMATION
+════════════════════════════ */
+.gh-snake-wrap {
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.gh-snake-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  padding: 1.5rem;
+  transition: border-color var(--transition-base);
+}
+
+.gh-snake-card:hover {
+  border-color: rgba(168,85,247,0.2);
+}
+
+.gh-snake-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ════════════════════════════
+   REPO CARDS
+════════════════════════════ */
+.gh-repos-wrap {
+  /* nothing extra */
+}
+
+.gh-repos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(0.75rem, 1.5vw, 1.25rem);
+}
+
+.gh-repo-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: inherit;
+  transition:
+    transform     var(--transition-base),
+    border-color  var(--transition-base),
+    box-shadow    var(--transition-base),
+    background    var(--transition-base);
+  cursor: pointer;
+}
+
+.gh-repo-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(168,85,247,0.25);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  background: rgba(26,22,32,0.95);
+}
+
+.gh-repo-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.gh-repo-card__name {
+  font-family: 'Kanit', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color var(--transition-base);
+}
+
+.gh-repo-card:hover .gh-repo-card__name {
+  color: #c084fc;
+}
+
+.gh-repo-card__ext {
+  color: var(--text-dim);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.gh-repo-card:hover .gh-repo-card__ext {
+  opacity: 1;
+}
+
+.gh-repo-card__desc {
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.6;
+  flex: 1;
+}
+
+.gh-repo-card__footer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: auto;
+}
+
+.gh-repo-card__lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.gh-repo-card__lang-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.gh-repo-card__stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.68rem;
+  color: var(--text-dim);
+}
+
+.gh-repo-card__stat svg {
+  color: rgba(168,85,247,0.5);
+}
+
+/* Skeleton */
+.gh-skeleton {
+  pointer-events: none;
+}
+
+/* Fallback text */
+.gh-img-fallback {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  text-align: center;
+  padding: 2rem;
+  width: 100%;
+}
+
+/* ════════════════════════════
+   RESPONSIVE
+════════════════════════════ */
+@media (max-width: 1024px) {
+  .gh-repos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .gh-stats-row {
+    grid-template-columns: 1fr;
+  }
+
+  .gh-repos-grid {
+    grid-template-columns: 1fr;
+  }
+}
