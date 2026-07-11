@@ -111,6 +111,8 @@
       const dot=document.getElementById("cursor-dot");
       const ring=document.getElementById("cursor-ring");
 
+      if(!dot || !ring) return;
+
       let mouseX=0;
       let mouseY=0;
 

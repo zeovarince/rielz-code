@@ -1,16 +1,24 @@
 /**
- * experience.js — Experience Section
+ * experience.js — Experience Section (Fix: heading offset + travel benar)
  *
- * Layout persis seperti referensi video:
- * - Heading "Experience" center atas, ikut naik saat cards scroll
- * - 3 card tampil bersamaan, card tengah active (scale up), kiri-kanan scale down + dim
- * - Pinned horizontal scroll: vertikal → horizontal
- * - Indicator bawah: "01 / 03  Nama Jabatan  ›"
- * - Lightning border neon pada setiap card
+ * Logika scroll yang benar:
+ * - Viewport duduk TEPAT di bawah heading (top = headingHeight)
+ * - Travel = (total - 1) * step
+ *   → geser sampai hanya card TERAKHIR yang tersisa
+ * - Section height = headingH + viewportH + travel + buffer
  */
 
+import { ElectricBorder }         from '../utils/electric-border.js';
 import { formatExperiencePeriod } from '../utils/formatter.js';
 import { prefersReducedMotion }   from '../utils/helper.js';
+
+/* ─── Config ─── */
+const EB_CONFIG = {
+  color        : '#a855f7',
+  speed        : 0.8,
+  chaos        : 0.10,
+  borderRadius : 16,
+};
 
 /* ─── Icons ─── */
 const ICONS = {
@@ -20,7 +28,8 @@ const ICONS = {
   </svg>`,
   pen: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"
     stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+    <path d="M12 20h9"/>
+    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/>
   </svg>`,
   users: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"
     stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
@@ -41,62 +50,22 @@ const ICONS = {
 
 function getIcon(exp) {
   const p = (exp.position || '').toLowerCase();
-  if (p.includes('ketua')) return ICONS.crown;
+  if (p.includes('ketua'))      return ICONS.crown;
   if (p.includes('sekretaris')) return ICONS.pen;
   return ICONS.users;
 }
 
-/* ─── Lightning Border SVG ─── */
-function buildLightning(uid) {
-  return `
-    <svg class="exp-lightning" viewBox="0 0 100 100" preserveAspectRatio="none"
-      xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>
-        <filter id="lg-glow-${uid}" x="-10%" y="-10%" width="120%" height="120%">
-          <feGaussianBlur stdDeviation="1.5" result="b"/>
-          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <linearGradient id="lg-grad-${uid}" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%"   stop-color="#6366f1"/>
-          <stop offset="50%"  stop-color="#a855f7"/>
-          <stop offset="100%" stop-color="#ec4899"/>
-        </linearGradient>
-      </defs>
-      <!-- glow layer -->
-      <rect class="exp-lightning__glow"
-        x="1" y="1" width="98" height="98" rx="12"
-        fill="none"
-        stroke="url(#lg-grad-${uid})"
-        stroke-width="3"
-        filter="url(#lg-glow-${uid})"
-      />
-      <!-- sharp layer -->
-      <rect class="exp-lightning__path"
-        x="1" y="1" width="98" height="98" rx="12"
-        fill="none"
-        stroke="url(#lg-grad-${uid})"
-        stroke-width="1.2"
-      />
-    </svg>
-  `;
-}
-
-/* ─── Build Single Card ─── */
+/* ─── Build Card ─── */
 function buildCard(exp, index) {
-  const uid      = `exp${index}`;
   const period   = formatExperiencePeriod(exp.period_start, exp.period_end);
   const isActive = !exp.period_end;
   const icon     = getIcon(exp);
-
-  const skills = (exp.skills || [])
+  const skills   = (exp.skills || [])
     .map(s => `<span class="exp-badge">${s}</span>`).join('');
 
   return `
     <article class="exp-card" data-index="${index}" tabindex="0"
       aria-label="${exp.position} di ${exp.organization}">
-      ${buildLightning(uid)}
-
-      <!-- Top: icon + period -->
       <div class="exp-card__top">
         <div class="exp-card__icon">${icon}</div>
         <div class="exp-card__period-row">
@@ -104,109 +73,68 @@ function buildCard(exp, index) {
           <span class="exp-card__period">${period}</span>
         </div>
       </div>
-
-      <!-- Body -->
       <div class="exp-card__body">
         <h3 class="exp-card__pos">${exp.position}</h3>
         <p class="exp-card__org">${exp.organization_full || exp.organization}</p>
         <span class="exp-card__loc">${ICONS.mappin} ${exp.location}</span>
         <p class="exp-card__desc">${exp.description}</p>
       </div>
-
-      <!-- Skills -->
       <div class="exp-card__skills">${skills}</div>
     </article>
   `;
 }
 
-/* ─── Build Section HTML ─── */
+/* ─── Build HTML ─── */
 function buildHTML(experience) {
   const cards = experience.map((exp, i) => buildCard(exp, i)).join('');
   const total = String(experience.length).padStart(2, '0');
 
   return `
-    <!-- Heading center -->
     <div class="exp-heading-wrap" id="exp-heading">
       <p class="exp-label">~/experience</p>
       <h2 class="exp-title">Experience</h2>
     </div>
 
-    <!-- Cards track (horizontal pinned) -->
-    <div class="exp-viewport">
+    <div class="exp-viewport" id="exp-viewport">
       <div class="exp-track" id="exp-track">
         ${cards}
       </div>
     </div>
 
-    <!-- Bottom indicator -->
     <div class="exp-indicator" id="exp-indicator">
       <span class="exp-ind__num">
         <span id="exp-ind-cur">01</span>
         <span class="exp-ind__sep"> / ${total}</span>
       </span>
-      <span class="exp-ind__name" id="exp-ind-name">${experience[0]?.position || ''}</span>
+      <span class="exp-ind__sep">—</span>
+      <span class="exp-ind__name" id="exp-ind-name">
+        ${experience[0]?.position || ''}
+      </span>
       <span class="exp-ind__chevron">${ICONS.chevron}</span>
     </div>
   `;
 }
 
-/* ─── Lightning Animate ─── */
-function initLightning() {
+/* ─── Electric Border ─── */
+function initElectricBorders() {
+  const instances = [];
   document.querySelectorAll('.exp-card').forEach(card => {
-    const els = card.querySelectorAll('.exp-lightning__path, .exp-lightning__glow');
-    els.forEach(el => {
-      const len = el.getTotalLength ? el.getTotalLength() : 400;
-      el.style.strokeDasharray  = len;
-      el.style.strokeDashoffset = len;
-      el.style.transition = 'stroke-dashoffset 0.65s cubic-bezier(0.4,0,0.2,1)';
-    });
-
-    const show = () => els.forEach(el => { el.style.strokeDashoffset = '0'; });
-    const hide = () => els.forEach(el => {
-      const len = el.getTotalLength ? el.getTotalLength() : 400;
-      el.style.strokeDashoffset = len;
-    });
-
-    card.addEventListener('mouseenter', show);
-    card.addEventListener('mouseleave', hide);
-    card.addEventListener('focus',      show);
-    card.addEventListener('blur',       hide);
+    const eb = new ElectricBorder(card, EB_CONFIG);
+    eb.start();
+    instances.push(eb);
   });
+  return instances;
 }
 
-/* ─── Carousel Depth Effect ─── */
-function applyDepth(cards, activeIndex) {
+/* ─── Active card ─── */
+function updateActiveCard(cards, activeIndex) {
   cards.forEach((card, i) => {
-    const dist = i - activeIndex;
-    const absDist = Math.abs(dist);
-
-    if (absDist === 0) {
-      // Active card — full scale, full opacity
-      card.style.transform = 'scale(1) translateY(0px)';
-      card.style.opacity   = '1';
-      card.style.filter    = 'brightness(1)';
-      card.classList.add('exp-card--active');
-    } else if (absDist === 1) {
-      // Adjacent — scale down sedikit, sedikit dim
-      const dir = dist > 0 ? 1 : -1;
-      card.style.transform = `scale(0.88) translateY(24px)`;
-      card.style.opacity   = '0.55';
-      card.style.filter    = 'brightness(0.7)';
-      card.classList.remove('exp-card--active');
-    } else {
-      // Far — lebih kecil dan transparan
-      card.style.transform = `scale(0.76) translateY(40px)`;
-      card.style.opacity   = '0.25';
-      card.style.filter    = 'brightness(0.5)';
-      card.classList.remove('exp-card--active');
-    }
-
-    card.style.transition = 'transform 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.5s ease, filter 0.5s ease';
-    card.setAttribute('aria-current', absDist === 0 ? 'true' : 'false');
+    card.classList.toggle('exp-card--active', i === activeIndex);
+    card.setAttribute('aria-current', i === activeIndex ? 'true' : 'false');
   });
 }
 
-/* ─── Update Indicator ─── */
+/* ─── Indicator ─── */
 function updateIndicator(index, experience) {
   const cur  = document.getElementById('exp-ind-cur');
   const name = document.getElementById('exp-ind-name');
@@ -214,57 +142,128 @@ function updateIndicator(index, experience) {
   if (name) name.textContent = experience[index]?.position || '';
 }
 
-/* ─── Pinned Horizontal Scroll ─── */
+/* ─────────────────────────────────────────────
+   PINNED HORIZONTAL SCROLL
+
+   Diagram layout saat scroll aktif:
+   ┌─────────────────────────────────┐ ← top section
+   │  HEADING  (sticky top:0)        │ ← tinggi = headingH
+   ├─────────────────────────────────┤
+   │  VIEWPORT (sticky top:headingH) │ ← tinggi = 100vh - headingH
+   │  [card1][card2][card3]          │
+   └─────────────────────────────────┘ ← bottom section
+
+   Section height:
+   = headingH          (ruang untuk heading)
+   + (100vh - headingH) (ruang untuk viewport, 1x diam)
+   + travel             (jarak geser horizontal)
+   + buffer             (sedikit napas di akhir)
+
+   = 100vh + travel + buffer
+
+   Travel:
+   Geser sampai card ke-(total-1) hampir keluar kiri,
+   hanya card TERAKHIR yang tersisa sendirian.
+   travel = (total - 1) * (cardW + gap)
+───────────────────────────────────────────── */
 function initPinnedScroll(experience) {
   const section   = document.getElementById('experience');
+  const heading   = document.getElementById('exp-heading');
+  const viewport  = document.getElementById('exp-viewport');
   const track     = document.getElementById('exp-track');
   const indicator = document.getElementById('exp-indicator');
-  if (!section || !track) return;
 
-  const cards    = Array.from(track.querySelectorAll('.exp-card'));
-  const total    = cards.length;
-  const CARD_W   = () => cards[0]?.offsetWidth || 380;
-  const GAP      = () => parseInt(getComputedStyle(track).gap) || 40;
+  if (!section || !heading || !viewport || !track) return;
 
-  // Setiap step = 1 card width + gap
-  const stepDist = () => CARD_W() + GAP();
-  // Total horizontal travel = (total - 1) langkah
-  const totalDist = () => stepDist() * (total - 1);
+  const cards = Array.from(track.querySelectorAll('.exp-card'));
+  const total = cards.length;
+  if (total === 0) return;
 
-  // Section height = totalDist + 1 viewport (buffer atas bawah)
-  function setHeight() {
-    section.style.height = `${totalDist() + window.innerHeight * 1.5}px`;
+  /* ── Getter — dihitung ulang saat resize ── */
+  const headingH  = () => heading.offsetHeight;
+  const viewportH = () => window.innerHeight - headingH();
+  const cardW     = () => cards[0]?.offsetWidth || 480;
+  const gap       = () => {
+    return parseFloat(getComputedStyle(track).gap)
+        || parseFloat(getComputedStyle(track).columnGap)
+        || 32;
+  };
+  const step      = () => cardW() + gap();
+
+  /*
+   * Travel = geser semua card kecuali yang terakhir keluar ke kiri
+   * Contoh 3 card: travel = 2 * step
+   * → card 1 hilang, card 2 hilang, card 3 sendirian
+   */
+  const travel    = () => step() * (total - 1);
+
+  /* ── Set viewport position tepat di bawah heading ── */
+  function positionViewport() {
+    const hH = headingH();
+    const vH = viewportH();
+    viewport.style.top    = `${hH}px`;
+    viewport.style.height = `${vH}px`;
   }
-  setHeight();
-  window.addEventListener('resize', setHeight, { passive: true });
 
-  // Awal: card pertama aktif
-  applyDepth(cards, 0);
+  /* ── Set section height ── */
+  function setHeight() {
+    /*
+     * 100vh       : heading + viewport pertama kali tampil (diam)
+     * travel()    : ruang vertikal yang dikonversi ke horizontal
+     */
+    section.style.height = `${window.innerHeight + travel()}px`;
+  }
+
+  positionViewport();
+  setHeight();
+
+  /* Resize handler */
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      positionViewport();
+      setHeight();
+      onScroll();
+    }, 100);
+  }, { passive: true });
+
+  /* Init state */
+  updateActiveCard(cards, 0);
   updateIndicator(0, experience);
 
+  /* ── Scroll handler ── */
   function onScroll() {
-    const rect     = section.getBoundingClientRect();
-    const scrolled = Math.max(0, -rect.top);
-    const dist     = totalDist();
+    const t          = travel();
+    const sectionTop = section.getBoundingClientRect().top + window.scrollY;
 
-    // Clamp
-    const clamped = Math.min(scrolled, dist);
+    /*
+     * Scroll horizontal mulai aktif setelah user scroll melewati:
+     * sectionTop → masuk section
+     * + headingH() → heading sudah tampil penuh (tidak terpotong)
+     *
+     * Sebelum triggerAt: track diam di posisi 0
+     * Setelah triggerAt: track geser ke kiri seiring scroll
+     */
+    const triggerAt = sectionTop + headingH();
+    const rawScrolled = window.scrollY - triggerAt;
+    const scrolled    = Math.max(0, rawScrolled);
+    const clamped     = Math.min(scrolled, t);
 
-    // Berapa card yang sudah terscroll
-    const step = stepDist();
-    const rawIndex  = clamped / step;
-    const activeIdx = Math.min(Math.round(rawIndex), total - 1);
-
-    // Geser track
+    /* Geser track */
     track.style.transform = `translateX(-${clamped}px)`;
 
-    // Depth effect
-    applyDepth(cards, activeIdx);
+    /* Active card */
+    const s         = step();
+    const rawIndex  = s > 0 ? clamped / s : 0;
+    const activeIdx = Math.min(Math.round(rawIndex), total - 1);
+    updateActiveCard(cards, activeIdx);
     updateIndicator(activeIdx, experience);
 
-    // Tampilkan indicator saat dalam section
+    /* Indicator: tampil selama scroll horizontal berlangsung */
     if (indicator) {
-      indicator.style.opacity = scrolled > 10 && clamped < dist + 50 ? '1' : '0';
+      const isScrolling = scrolled > 20 && clamped < t + 60;
+      indicator.style.opacity = isScrolling ? '1' : '0';
     }
   }
 
@@ -277,24 +276,23 @@ export function initExperience(experience) {
   const section = document.getElementById('experience');
   if (!section || !experience?.length) return;
 
-  // Override section style untuk pinned
   section.style.position = 'relative';
   section.classList.add('exp-section');
   section.innerHTML = buildHTML(experience);
 
   if (prefersReducedMotion()) {
-    // Fallback: tampilkan semua card vertikal tanpa scroll effect
     const track = document.getElementById('exp-track');
     if (track) {
       track.style.flexDirection = 'column';
       track.style.transform     = 'none';
       section.style.height      = 'auto';
     }
+    requestAnimationFrame(() => initElectricBorders());
     return;
   }
 
   requestAnimationFrame(() => {
-    initLightning();
+    initElectricBorders();
     initPinnedScroll(experience);
   });
 }

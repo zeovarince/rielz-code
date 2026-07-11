@@ -3,67 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Project Detail</title>
+  <title>Project Detail — Choiril Portfolio</title>
   <meta name="description" content="Detail proyek dari portfolio Choiril." />
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg" />
-  <link rel="icon" type="image/png" href="/assets/icons/favicon.png" />
+  <link rel="icon" type="image/svg+xml" href="../../assets/icons/favicon.svg" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <!-- Devicon -->
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
-  />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
 
-  <!-- Tailwind CSS Play CDN -->
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: {
-            kanit: ["'Kanit'", "sans-serif"],
-            inter: ["'Inter'", "sans-serif"],
-          },
+          fontFamily: { kanit: ["'Kanit'","sans-serif"], inter: ["'Inter'","sans-serif"] },
           colors: {
-            "bg-primary":    "#0C0C0C",
-            "bg-secondary":  "#111111",
-            "bg-card":       "#161616",
-            "text-primary":  "#D7E2EA",
-            "accent-purple": "#a855f7",
-            "accent-pink":   "#ec4899",
-          },
-          fontSize: {
-            "fluid-hero": ["clamp(3rem, 17.5vw, 18rem)", { lineHeight: "1" }],
-            "fluid-xl":   ["clamp(2rem, 8vw, 8rem)",    { lineHeight: "1" }],
-            "fluid-lg":   ["clamp(1.5rem, 4vw, 4rem)",  { lineHeight: "1.1" }],
-            "fluid-md":   ["clamp(1rem, 2vw, 2rem)",    { lineHeight: "1.2" }],
-            "fluid-sm":   ["clamp(0.75rem, 1.4vw, 1.5rem)", { lineHeight: "1.4" }],
-          },
-          animation: {
-            "fade-in":  "fadeIn 0.7s cubic-bezier(0.25,0.1,0.25,1) forwards",
-            "slide-up": "slideUp 0.7s cubic-bezier(0.25,0.1,0.25,1) forwards",
-            "float":    "float 6s ease-in-out infinite",
-          },
-          keyframes: {
-            fadeIn:  { "0%": { opacity: "0" }, "100%": { opacity: "1" } },
-            slideUp: { "0%": { opacity: "0", transform: "translateY(40px)" }, "100%": { opacity: "1", transform: "translateY(0)" } },
-            float:   { "0%, 100%": { transform: "translateY(0px)" }, "50%": { transform: "translateY(-20px)" } },
-          },
-          boxShadow: {
-            "glow-purple": "0 0 20px rgba(168,85,247,0.35), 0 0 40px rgba(236,72,153,0.20)",
-            "card":        "0 4px 24px rgba(0,0,0,0.4)",
-            "card-hover":  "0 8px 40px rgba(0,0,0,0.6)",
+            "bg-primary":"#0C0C0C","bg-secondary":"#111111","bg-card":"#161616",
+            "text-primary":"#D7E2EA","accent-purple":"#a855f7","accent-pink":"#ec4899",
           },
         },
       },
@@ -72,34 +34,16 @@
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="../../styles/main.css" />
-
   <meta name="theme-color" content="#0C0C0C" />
 </head>
 
-<body class="cursor-none overflow-x-hidden">
-
-  <!-- Splash Cursor -->
-  <div id="splash-cursor" class="splash-cursor" aria-hidden="true">
-    <canvas id="splash-canvas"></canvas>
-  </div>
-
-  <!-- Floating Dock Navigation -->
-  <nav id="floating-dock" aria-label="Navigasi utama">
-    <!-- Dirender oleh js/components/navbar.js -->
-  </nav>
-
+<body class="overflow-x-hidden">
   <!-- Project Detail Content -->
-  <main id="project-detail" class="overflow-x-clip">
-    <!-- Dirender oleh JS berdasarkan URL parameter ?id= -->
-  </main>
+  <main id="project-detail" class="overflow-x-clip min-h-screen"></main>
 
-  <!-- Footer -->
-  <footer id="footer">
-    <!-- Dirender oleh js/components/footer.js -->
-  </footer>
-
-  <!-- Script -->
-  <script type="module" src="../../js/app.js"></script>
-
+  <script type="module">
+    import { initProjectDetail } from '../../js/pages/project-detail.js';
+    document.addEventListener('DOMContentLoaded', initProjectDetail);
+  </script>
 </body>
 </html>

@@ -32,7 +32,7 @@ function initModules(data) {
   initAbout(data.profile);
   initTechStack(data.config.techstack);
   initExperience(data.experience);
-  initProjects(data.projects);
+  initProjects(data.projects, data.profile?.social?.github || data.config.contact?.github);
   initGitHub(data.config.github, data.profile);
   initCertificates(data.certificates);
   initContact(data.profile, data.config.contact);
