@@ -59,7 +59,7 @@
     "subtitle": "Search Engine Akademik & Publikasi Ilmiah",
     "description": "Search Engine literatur akademik cerdas pada bidang kesehatan dengan fitur semantic search, citation graph, dan algoritma perankingan.",
     "long_description": "ScholarSearch ID adalah platform penelusuran publikasi ilmiah yang mengintegrasikan algoritma Information Retrieval tingkat lanjut seperti BM25, TF-IDF, PageRank, dan Neural Ranking. Dibangun dengan basis Python, platform ini dilengkapi fitur web scraping dari Garuda, visualisasi graf sitasi (citation graph), spell correction, ekspansi kueri, dan pencarian semantik untuk hasil yang akurat.",
-    "thumbnail": "/assets/images/projects/scholarsearchid.png",
+    "thumbnail": "/assets/images/projects/ssid.png",
     "images": [],
     "tech": ["Python", "HTML", "CSS", "JavaScript"],
     "category": "Web Development",
@@ -68,23 +68,5 @@
     "github_url": "https://github.com/zeovarince/ScholarSearchID",
     "featured": true,
     "order": 4
-  },
-  {
-    "id": 5,
-    "slug": "ta-toefl",
-    "title": "TA TOEFL Test Platform",
-    "subtitle": "Aplikasi Simulasi Ujian TOEFL Interaktif",
-    "description": "Sistem ujian TOEFL digital yang menyediakan modul latihan terstruktur dan generator e-sertifikat kelulusan.",
-    "long_description": "Aplikasi simulasi tes TOEFL berbasis web yang dirancang untuk mendukung evaluasi kemampuan bahasa Inggris secara mandiri. Platform ini menyajikan modul latihan komprehensif yang terbagi ke dalam sesi Listening, Structure, dan Reading menggunakan integrasi data JSON. Dibangun menggunakan HTML, JavaScript, dan jQuery, sistem ini dilengkapi antarmuka dashboard, pemutar audio internal untuk soal listening, serta fitur cetak sertifikat otomatis di akhir tes.",
-    "thumbnail": "/assets/images/projects/toefl.png",
-    "images": [],
-    "tech": ["HTML", "JavaScript", "jQuery", "JSON"],
-    "category": "Web Development",
-    "year": "2026",
-    "status": "completed",
-    "github_url": "https://github.com/zeovarince/TA_TOEFL",
-    "featured": false,
-    "order": 5
   }
-
 ]

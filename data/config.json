@@ -37,7 +37,6 @@
     { "id": "experience",   "label": "Experience",   "icon": "briefcase" },
     { "id": "projects",     "label": "Projects",     "icon": "layers" },
     { "id": "github",       "label": "GitHub",       "icon": "github" },
-    { "id": "certificates", "label": "Certificates", "icon": "award" },
     { "id": "contact",      "label": "Contact",      "icon": "mail" }
   ],
   "contact": {

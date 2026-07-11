@@ -157,7 +157,7 @@ function buildAboutHTML(profile) {
         <!-- Avatar frame -->
         <div class="about-avatar-frame">
           <img
-            src="${avatarPath}"
+            src="../../assets/images/profile/profil.png"
             alt="Foto ${fullName}"
             class="about-avatar"
             loading="lazy"
