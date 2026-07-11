@@ -55,24 +55,5 @@
       "Teknologi",
       "Organization"
     ]
-  },
-  {
-    "id": 3,
-    "organization": "KOALISI",
-    "organization_full": "Komunitas Linux Siber Teknologi Informasi",
-    "logo": "/assets/images/organizations/koalisi.png",
-    "position": "Sekretaris Badan Pengurus Harian",
-    "period": "2026 – Sekarang",
-    "period_start": "2026-01",
-    "period_end": null,
-    "location": "Universitas Trunojoyo Madura",
-    "type": "organizational",
-    "description": "Bertanggung jawab terhadap administrasi organisasi komunitas Linux dan siber, pengarsipan dokumen resmi, notulensi rapat BPH, serta membantu koordinasi antar pengurus dalam pelaksanaan program kerja.",
-    "skills": [
-      "Administration",
-      "Documentation",
-      "Teknologi",
-      "Organization"
-    ]
   }
 ]
