@@ -1,6 +1,6 @@
 {
   "site": {
-    "title": "A.CHOIRIL ANWAR EL-ASFIHANI RISYDABN",
+    "title": "A.CHOIRIL ANWAR EL-ASFIHANI RISYDAN",
     "description": "Frontend Developer & UI/UX Designer. Membangun pengalaman web modern, interaktif, dan berdampak.",
     "og_image": "/assets/images/avatar.png",
     "favicon": "/assets/icons/favicon.png",
@@ -10,7 +10,7 @@
     "username": "zeovarince",
     "api_base": "https://api.github.com",
     "contribution_graph": "https://ghchart.rshah.org/zeovarince",
-    "snake_dark": "https://raw.githubusercontent.com/zeovarince/zeovarince/output/github-contribution-grid-snake-dark.svg",
+    "snake_dark": "https://raw.githubusercontent.com/zeovarince/rielz-code/output/github-contribution-grid-snake-dark.svg",
     "stats_card": "https://github-readme-stats.vercel.app/api?username=zeovarince&show_icons=true&theme=dark&hide_border=true&bg_color=0C0C0C&title_color=D7E2EA&text_color=D7E2EA&icon_color=a855f7",
     "lang_card": "https://github-readme-stats.vercel.app/api/top-langs/?username=zeovarince&layout=compact&theme=dark&hide_border=true&bg_color=0C0C0C&title_color=D7E2EA&text_color=D7E2EA"
   },
@@ -18,7 +18,7 @@
     { "name": "HTML5",      "icon": "devicon-html5-plain",         "color": "#E34F26" },
     { "name": "CSS3",       "icon": "devicon-css3-plain",          "color": "#1572B6" },
     { "name": "JavaScript", "icon": "devicon-javascript-plain",    "color": "#F7DF1E" },
-    { "name": "Bootstrap", "icon": "devicon-bootstrap-plain",    "color": "#723EC3" },
+    { "name": "Bootstrap",  "icon": "devicon-bootstrap-plain",     "color": "#723EC3" },
     { "name": "Tailwind",   "icon": "devicon-tailwindcss-plain",   "color": "#06B6D4" },
     { "name": "Node.js",    "icon": "devicon-nodejs-plain",        "color": "#339933" },
     { "name": "MySQL",      "icon": "devicon-mysql-plain",         "color": "#4479A1" },
@@ -37,12 +37,13 @@
     { "id": "experience",   "label": "Experience",   "icon": "briefcase" },
     { "id": "projects",     "label": "Projects",     "icon": "layers" },
     { "id": "github",       "label": "GitHub",       "icon": "github" },
+    { "id": "certificates", "label": "Certificates", "icon": "award" },
     { "id": "contact",      "label": "Contact",      "icon": "mail" }
   ],
   "contact": {
     "email": "achoirilanwar01@gmail.com",
-    "instagram" : "2ez4rielz",
-    "github" : "zeovarince", 
+    "instagram": "2ez4rielz",
+    "github": "zeovarince",
     "form_enabled": false
   }
 }
