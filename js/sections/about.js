@@ -2,12 +2,11 @@
  * about.js — About Section
  *
  * Layout:
- * - Kiri : foto avatar + availability badge + social links
+ * - Kiri : ProfileCard (tilt + holographic effect)
  * - Kanan: label, heading besar, bio, stats row, title tags
- *
- * Data dari profile.json
- * Animasi: fade-in-hidden via IntersectionObserver (sudah di app.js)
  */
+
+import { createProfileCard } from './profilecard.js';
 
 /* ─────────────────────────────────────────────
    ICON SVG — Lucide inline
@@ -54,34 +53,14 @@ const SOCIAL_ICONS = {
     <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
     <path d="M6 12v5c0 2 6 3 6 3s6-1 6-3v-5"/>
   </svg>`,
-
-  arrowupright: `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
-    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <line x1="7" y1="17" x2="17" y2="7"/>
-    <polyline points="7 7 17 7 17 17"/>
-  </svg>`,
 };
 
-/* ─────────────────────────────────────────────
-   STATS — angka yang ditampilkan
-───────────────────────────────────────────── */
-function buildStats(profile) {
-  const year = parseInt(profile.year || '2024', 10);
-  const yearsActive = new Date().getFullYear() - year + 1;
-
-  return [
-    { value: yearsActive + '+', label: 'Years\nLearning' },
-    { value: profile.title.length + '+', label: 'Tech\nRoles' },
-    { value: '10+', label: 'Projects\nBuilt' },
-  ];
-}
 
 /* ─────────────────────────────────────────────
-   BUILD SOCIAL LINKS
+   SOCIAL LINKS
 ───────────────────────────────────────────── */
 function buildSocialLinks(social, email) {
   const links = [];
-
   if (social?.github)
     links.push({ href: social.github, icon: 'github', label: 'GitHub' });
   if (social?.instagram)
@@ -92,57 +71,33 @@ function buildSocialLinks(social, email) {
     links.push({ href: `mailto:${email}`, icon: 'mail', label: 'Email' });
 
   return links.map(({ href, icon, label }) => `
-    <a
-      href="${href}"
-      target="_blank"
-      rel="noreferrer noopener"
-      class="about-social-link"
-      aria-label="${label}"
-      title="${label}"
-    >
+    <a href="${href}" target="_blank" rel="noreferrer noopener"
+      class="about-social-link" aria-label="${label}" title="${label}">
       ${SOCIAL_ICONS[icon]}
     </a>
   `).join('');
 }
 
 /* ─────────────────────────────────────────────
-   BUILD TITLE TAGS
+   TITLE TAGS
 ───────────────────────────────────────────── */
 function buildTitleTags(titles = []) {
-  return titles.map((t) => `
-    <span class="about-title-tag">${t}</span>
-  `).join('');
+  return titles.map(t => `<span class="about-title-tag">${t}</span>`).join('');
 }
 
 /* ─────────────────────────────────────────────
-   BUILD STATS ROW
-───────────────────────────────────────────── */
-function buildStatsRow(stats) {
-  return stats.map(({ value, label }) => `
-    <div class="about-stat">
-      <span class="about-stat__value">${value}</span>
-      <span class="about-stat__label">${label.replace('\n', '<br>')}</span>
-    </div>
-  `).join('');
-}
-
-/* ─────────────────────────────────────────────
-   HTML BUILDER
+   HTML BUILDER — tanpa avatar kiri (akan di-inject JS)
 ───────────────────────────────────────────── */
 function buildAboutHTML(profile) {
-  const stats       = buildStats(profile);
   const socialLinks = buildSocialLinks(profile.social, profile.email);
   const titleTags   = buildTitleTags(profile.title);
-  const statsRow    = buildStatsRow(stats);
 
-  const avatarPath  = profile.avatar || '/assets/images/profile/avatar.png';
-  const fullName    = profile.name?.full || '';
-  const bio         = profile.bio || '';
-  const location    = profile.location || '';
-  const university  = profile.university || '';
-  const major       = profile.major || '';
-  const available   = profile.availability ?? true;
-  const availText   = profile.availability_text || 'Open for collaboration';
+  const bio        = profile.bio || '';
+  const available  = profile.availability ?? true;
+  const availText  = profile.availability_text || 'Open for collaboration';
+  const location   = profile.location || '';
+  const university = profile.university || '';
+  const major      = profile.major || '';
 
   return `
     <!-- Section label -->
@@ -151,21 +106,11 @@ function buildAboutHTML(profile) {
     <!-- Grid: kiri + kanan -->
     <div class="about-grid">
 
-      <!-- ══ KIRI: Avatar + info ══ -->
+      <!-- ══ KIRI: ProfileCard slot ══ -->
       <div class="about-left fade-in-hidden from-left">
 
-        <!-- Avatar frame -->
-        <div class="about-avatar-frame">
-          <img
-            src="../../assets/images/profile/profil.png"
-            alt="Foto ${fullName}"
-            class="about-avatar"
-            loading="lazy"
-            onerror="this.style.display='none'"
-          />
-          <!-- Glow ring -->
-          <div class="about-avatar-glow" aria-hidden="true"></div>
-        </div>
+        <!-- ProfileCard akan di-inject di sini -->
+        <div id="about-profile-card-slot"></div>
 
         <!-- Availability badge -->
         ${available ? `
@@ -207,26 +152,15 @@ function buildAboutHTML(profile) {
       <!-- ══ KANAN: Teks ══ -->
       <div class="about-right">
 
-        <!-- Heading -->
         <h2 class="about-heading fade-in-hidden" data-delay="100">
           Crafting digital<br>
           <span class="text-gradient">experiences.</span>
         </h2>
 
-        <!-- Bio -->
         <p class="about-bio fade-in-hidden" data-delay="200">
           ${bio}
         </p>
 
-        <!-- Stats row -->
-        <div class="about-stats fade-in-hidden" data-delay="300">
-          ${statsRow}
-        </div>
-
-        <!-- Divider -->
-        <div class="divider fade-in-hidden" data-delay="350"></div>
-
-        <!-- Title tags -->
         <div class="about-titles fade-in-hidden" data-delay="400">
           ${titleTags}
         </div>
@@ -246,4 +180,30 @@ export function initAbout(profile) {
 
   const inner = section.querySelector('.section-inner') || section;
   inner.innerHTML = buildAboutHTML(profile);
+
+  // Inject ProfileCard ke slot
+  const slot = document.getElementById('about-profile-card-slot');
+  if (!slot) return;
+
+  const avatarUrl = profile.avatar || '/assets/images/profile/avatar.png';
+  const displayName = profile.name?.display_profil || profile.name?.full || 'Riel';
+  const titleStr = Array.isArray(profile.title) ? profile.title[0] : profile.title || 'Frontend Developer';
+  const handle = profile.social?.instagram
+    ? profile.social.instagram.replace('https://instagram.com/', '').replace('https://www.instagram.com/', '').replace('@', '')
+    : displayName.toLowerCase();
+
+  const card = createProfileCard({
+    avatarUrl,
+    miniAvatarUrl: avatarUrl,
+    name         : displayName,
+    title        : titleStr,
+    handle       : handle,
+    status       : profile.name?.full,
+    contactText  : 'Contact',
+    onContactClick: () => {
+      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    },
+  });
+
+  slot.replaceWith(card);
 }

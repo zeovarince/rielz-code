@@ -3,6 +3,7 @@
     "full": "A. Choiril Anwar El-Asfihani Risydan",
     "short": "Riel",
     "display": "Hello, I'am Riel",
+    "display_profil": "Riel",
     "avatar": "/assets/images/profile/avatar.png"
   },
   "title": [
@@ -23,8 +24,6 @@
     "github":    "https://github.com/zeovarince",
     "instagram": "https://instagram.com/2ez4rielz"
   },
-  "availability": true,
-  "availability_text": "A. CHOIRIL ANWAR EL-ASFIHANI RISYDAN",
   "cv": "/public/CV_ATS_A.CHOIRIL ANWAR EL-A.R.pdf",
   "avatar": "/assets/images/profile/avatar.png"
 }
