@@ -25,7 +25,7 @@
     "subtitle": "Pemesanan Tiket Bioskop",
     "description": "Portal web native PHP/MySQL untuk pemesanan tiket bioskop dan manajemen pendapatan dengan UI dark-mode ala VS Code.",
     "long_description": "Sistem pemesanan tiket biosko berbasis web menggunakan PHP native dan MySQL untuk mengelola pemesanan tiket bioskop dan manajemen pendapatan. Didesain dengan estetika VS Code dark-mode dan fitur manajemen lengkap untuk custommer dan admin.",
-    "thumbnail": "/assets/images/projects/.png",
+    "thumbnail": "/assets/images/projects/oniccinema.png",
     "images": [],
     "tech": ["PHP", "MySQL","CSS", "Tailwind" , "Chart.js"],
     "category": "Web Application",

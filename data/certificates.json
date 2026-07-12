@@ -1,22 +1,42 @@
 [
   {
     "id": 1,
-    "title": "Sertifikat Contoh 1",
-    "issuer": "Nama Lembaga",
-    "date": "2025-01",
+    "title": "Peserta APAC Cybersecurity",
+    "issuer": "Universitas Trunojoyo Madura",
+    "date": "2026-03",
     "credential_url": null,
-    "image": "/assets/images/certificates/cert-1.png",
-    "category": "Development",
+    "image": "/assets/images/certificates/png2pdf.pdf",
+    "category": "Learning",
     "featured": true
   },
   {
     "id": 2,
-    "title": "Sertifikat Contoh 2",
-    "issuer": "Nama Lembaga",
-    "date": "2024-12",
+    "title": "Participant Tech Talk Unwrapped 2025",
+    "issuer": "Google Developer Groups On Campus UTM",
+    "date": "2025-12",
     "credential_url": null,
-    "image": "/assets/images/certificates/cert-2.png",
-    "category": "Design",
+    "image": "/assets/images/certificates/cloudgdgoc.pdf",
+    "category": "Learning",
+    "featured": true
+  },
+  {
+    "id": 3,
+    "title": "Sekretaris Divisi Pengkaderan",
+    "issuer": "UKMFT-ITC Universitas Trunojoyo Madura",
+    "date": "2025-12",
+    "credential_url": null,
+    "image": "/assets/images/certificates/ukmftitc.pdf",
+    "category": "Organization",
+    "featured": true
+  },
+  {
+    "id": 4,
+    "title": "Ketua Pelaksana INFINITE 2025",
+    "issuer": "UKMFT-ITC Universitas Trunojoyo Madura",
+    "date": "2025-10",
+    "credential_url": null,
+    "image": "/assets/images/certificates/infinite.pdf",
+    "category": "Organization",
     "featured": true
   }
 ]

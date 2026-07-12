@@ -1,310 +1,362 @@
-/*CERTIFICATES.CSS*/
+/* ==========================================================================
+   CERTIFICATES.CSS — List kiri, CardSwap kanan, PDF render
+   ========================================================================== */
 
-.cert-header { margin-bottom: clamp(2rem, 4vw, 3rem); }
+.cert-header { margin-bottom: clamp(2rem, 4vw, 3.5rem); }
 
-/* ── Filter tabs ── */
-.cert-filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: clamp(2rem, 4vw, 3rem);
-}
-
-.cert-filter-btn {
-  padding: 0.4rem 1.1rem;
-  border-radius: var(--radius-full);
-  font-family: 'Kanit', sans-serif;
+.cert-label {
+  display: block;
   font-size: 0.72rem;
-  font-weight: 600;
+  font-weight: 500;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  border: 1px solid var(--border-subtle);
-  background: transparent;
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: background var(--transition-base), border-color var(--transition-base), color var(--transition-base);
+  color: #a855f7;
+  margin-bottom: 0.5rem;
 }
 
-.cert-filter-btn:hover {
-  background: rgba(168,85,247,0.08);
-  border-color: rgba(168,85,247,0.25);
-  color: var(--text-primary);
+.cert-heading {
+  font-family: 'Kanit', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
-.cert-filter-btn--active {
-  background: rgba(168,85,247,0.15);
-  border-color: rgba(168,85,247,0.4);
-  color: #c084fc;
-}
-
-/* ── Grid ── */
-.cert-grid {
+/* ── Content grid: list kiri, card kanan ── */
+.cert-content {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(1rem, 2vw, 1.5rem);
+  grid-template-columns: 1fr 1.1fr;
+  gap: clamp(2.5rem, 5vw, 5rem);
+  align-items: center;
 }
 
-/* ── Card ── */
-.cert-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
+/* ════════════════════════════
+   KIRI — List
+════════════════════════════ */
+.cert-list {
   display: flex;
   flex-direction: column;
-  transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
+  gap: 0.5rem;
+  max-height: 520px;
+  overflow-y: auto;
+  padding-right: 0.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(168,85,247,0.3) transparent;
+}
+.cert-list::-webkit-scrollbar       { width: 3px; }
+.cert-list::-webkit-scrollbar-track { background: transparent; }
+.cert-list::-webkit-scrollbar-thumb { background: rgba(168,85,247,0.3); border-radius:999px; }
+
+.cert-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: rgba(255,255,255,0.02);
   cursor: pointer;
+  transition: background var(--transition-base), border-color var(--transition-base), transform var(--transition-base);
+  outline: none;
 }
 
-.cert-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(168,85,247,0.25);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+.cert-list-item:hover {
+  background: rgba(168,85,247,0.06);
+  border-color: rgba(168,85,247,0.2);
+  transform: translateX(4px);
 }
 
-/* Glow strip atas */
-.cert-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #a855f7, #ec4899);
-  opacity: 0;
-  transition: opacity var(--transition-base);
+.cert-list-item:focus-visible {
+  border-color: rgba(168,85,247,0.4);
+  box-shadow: 0 0 0 2px rgba(168,85,247,0.15);
 }
-.cert-card { position: relative; }
-.cert-card:hover::before { opacity: 1; }
 
-/* ── Thumbnail ── */
-.cert-thumb {
-  position: relative;
-  width: 100%;
-  height: 180px;
+.cert-list-item--active {
+  background: rgba(168,85,247,0.1) !important;
+  border-color: rgba(168,85,247,0.35) !important;
+  transform: translateX(4px);
+}
+
+.cert-list-item__left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.cert-list-item__num {
+  font-family: 'Kanit', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  flex-shrink: 0;
+  width: 1.4rem;
+  transition: color var(--transition-fast);
+}
+.cert-list-item--active .cert-list-item__num { color: #a855f7; }
+
+.cert-list-item__info { min-width: 0; flex: 1; }
+
+.cert-list-item__title {
+  font-family: 'Kanit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(99,102,241,0.04));
+  text-overflow: ellipsis;
+  transition: color var(--transition-fast);
+}
+.cert-list-item--active .cert-list-item__title,
+.cert-list-item:hover   .cert-list-item__title { color: #c084fc; }
+
+.cert-list-item__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.2rem;
+}
+.cert-list-item__meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.64rem;
+  color: var(--text-dim);
+}
+.cert-list-item__meta svg { color: rgba(168,85,247,0.5); flex-shrink:0; }
+
+.cert-list-item__right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   flex-shrink: 0;
 }
 
-.cert-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.5s ease;
+.cert-list-item__cat {
+  font-size: 0.58rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #a855f7;
+  background: rgba(168,85,247,0.1);
+  border: 1px solid rgba(168,85,247,0.2);
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
 }
 
-.cert-card:hover .cert-thumb img { transform: scale(1.04); }
-
-.cert-thumb--fallback {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, rgba(168,85,247,0.1), rgba(99,102,241,0.05));
+.cert-list-item__chevron {
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+.cert-list-item--active .cert-list-item__chevron,
+.cert-list-item:hover   .cert-list-item__chevron {
+  color: #a855f7;
+  transform: translateX(3px);
 }
 
-.cert-thumb__initials {
-  position: absolute;
-  inset: 0;
+/* ════════════════════════════
+   KANAN — CardSwap
+════════════════════════════ */
+.cert-swap-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 360px;
+  padding: 3rem 1rem 3rem 2rem;
+  position: relative;
+}
+
+.cert-swap-scene {
+  position: relative;
+}
+
+/* ── Card base ── */
+.cert-swap-card {
+  border: 1px solid rgba(255,255,255,0.09);
+  background: var(--bg-card);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.55),
+    0 0 0 1px rgba(255,255,255,0.03);
+  transition: box-shadow 0.3s ease;
+}
+.cert-swap-card:hover {
+  box-shadow:
+    0 28px 80px rgba(168,85,247,0.2),
+    0 20px 60px rgba(0,0,0,0.55);
+}
+
+/* ── PDF canvas wrap — berhenti tepat di atas footer ── */
+.cert-card-canvas-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 72px; /* sisakan ruang footer — harus sama dengan FOOTER_H di JS */
+  overflow: hidden;
+  background: #1a1a2e;
+}
+
+.cert-card-canvas {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* width & height dikontrol JS */
+}
+
+.cert-card-canvas-loading {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-card);
+}
+
+/* ── Fallback (no image) ── */
+.cert-card-fallback {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 72px; /* sama dengan footer */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(168,85,247,0.12), rgba(99,102,241,0.07));
+}
+
+/* ── Footer — panel solid terpisah di bawah ── */
+.cert-swap-card__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  background: rgba(8, 6, 16, 0.96);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  display: flex;
+  align-items: center;
+  padding: 0 1.1rem 0 1.25rem;
+  pointer-events: none;
+}
+
+/* footer di dalam overlay: judul kiri, tombol kanan */
+.cert-swap-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  pointer-events: auto;
+}
+
+.cert-swap-card__initials {
   font-family: 'Kanit', sans-serif;
-  font-size: 2.5rem;
+  font-size: 4rem;
   font-weight: 900;
   background: linear-gradient(135deg, #a855f7, #ec4899);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  opacity: 0;
-  transition: opacity var(--transition-base);
-  pointer-events: none;
 }
 
-/* Tampilkan initials jika gambar fallback */
-.cert-thumb.cert-thumb--fallback .cert-thumb__initials,
-.cert-card:not(:has(img)) .cert-thumb__initials { opacity: 1; }
-
-/* Overlay hover */
-.cert-thumb__overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity var(--transition-base);
-  backdrop-filter: blur(4px);
-}
-
-.cert-card:hover .cert-thumb__overlay { opacity: 1; }
-
-.cert-view-btn {
-  padding: 0.5rem 1.5rem;
-  border-radius: var(--radius-full);
+.cert-swap-card__title {
   font-family: 'Kanit', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  border: 1px solid rgba(168,85,247,0.5);
-  background: rgba(168,85,247,0.2);
-  color: #c084fc;
-  cursor: pointer;
-  transition: background var(--transition-fast);
-}
-.cert-view-btn:hover { background: rgba(168,85,247,0.35); }
-
-/* ── Info ── */
-.cert-info {
-  padding: 1.1rem 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  flex: 1;
-}
-
-.cert-info__top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-}
-
-.cert-category {
-  font-size: 0.62rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: #a855f7;
-  background: rgba(168,85,247,0.1);
-  border: 1px solid rgba(168,85,247,0.2);
-  padding: 0.15rem 0.55rem;
-  border-radius: var(--radius-full);
-}
-
-.cert-link {
-  color: var(--text-dim);
-  display: flex;
-  align-items: center;
-  transition: color var(--transition-base);
-  text-decoration: none;
-}
-.cert-link:hover { color: #c084fc; }
-
-.cert-title {
-  font-family: 'Kanit', sans-serif;
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: #fff;
   line-height: 1.3;
-  transition: color var(--transition-base);
-}
-.cert-card:hover .cert-title { color: #c084fc; }
-
-.cert-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  margin-top: auto;
+  margin-bottom: 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
 }
 
-.cert-issuer,
-.cert-date {
+.cert-swap-card__issuer {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.5);
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+}
+
+/* ── Tombol Lihat PDF ── */
+.cert-view-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  font-size: 0.68rem;
-  color: var(--text-dim);
-}
-.cert-issuer svg, .cert-date svg { color: rgba(168,85,247,0.5); flex-shrink:0; }
-
-/* ════════════════════
-   LIGHTBOX
-════════════════════ */
-.cert-lightbox {
-  position: fixed;
-  inset: 0;
-  z-index: 500;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-.cert-lightbox--open {
-  opacity: 1;
-  visibility: visible;
-}
-
-.cert-lightbox__backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  backdrop-filter: blur(8px);
-  cursor: pointer;
-}
-
-.cert-lightbox__content {
-  position: relative;
-  z-index: 1;
-  max-width: min(90vw, 800px);
-  width: 100%;
-  background: var(--bg-card);
-  border: 1px solid rgba(168,85,247,0.2);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  transform: scale(0.95);
-  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
-}
-
-.cert-lightbox--open .cert-lightbox__content { transform: scale(1); }
-
-.cert-lightbox__close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  width: 2.2rem;
-  height: 2.2rem;
-  border-radius: 50%;
-  border: 1px solid var(--border-mid);
-  background: rgba(255,255,255,0.06);
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 2;
-  transition: background var(--transition-base), color var(--transition-base);
-}
-.cert-lightbox__close:hover { background: rgba(168,85,247,0.2); color: #c084fc; }
-
-.cert-lightbox__img {
-  width: 100%;
-  max-height: 70vh;
-  object-fit: contain;
-  display: block;
-  background: rgba(0,0,0,0.3);
-}
-
-.cert-lightbox__info {
-  padding: 1.25rem 1.5rem;
-}
-
-.cert-lightbox__title {
   font-family: 'Kanit', sans-serif;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(168,85,247,0.4);
+  background: rgba(168,85,247,0.15);
+  color: #c084fc;
+  cursor: pointer;
+  flex-shrink: 0;
+  white-space: nowrap;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.cert-view-btn:hover {
+  background: rgba(168,85,247,0.28);
+  border-color: rgba(168,85,247,0.65);
+  transform: translateY(-1px);
 }
 
-.cert-lightbox__issuer {
-  font-size: 0.78rem;
-  color: var(--text-muted);
+/* Skeleton shimmer */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.04) 0%,
+    rgba(255,255,255,0.09) 50%,
+    rgba(255,255,255,0.04) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.6s ease-in-out infinite;
+}
+@keyframes skeletonShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
-/* ── Responsive ── */
-@media (max-width: 1024px) { .cert-grid { grid-template-columns: repeat(2,1fr); } }
-@media (max-width: 560px)  { .cert-grid { grid-template-columns: 1fr; } }
+/* ════════════════
+   RESPONSIVE
+════════════════ */
+@media (max-width: 1024px) {
+  .cert-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .cert-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  /* Mobile: card dulu, list di bawah */
+  .cert-content { grid-template-rows: auto auto; }
+  .cert-swap-wrap { order: -1; min-height: 260px; padding: 2rem 0.5rem; }
+
+  .cert-list { max-height: none; }
+}

@@ -58,12 +58,12 @@ const ICONS = {
       A3.37 3.37 0 0 0 9 18.13V22"/>
   </svg>`,
 
-  // award: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-  //   fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-  //   <circle cx="12" cy="9" r="7"/>
-  //   <polyline points="9 14.2 12 22 15 14.2"/>
-  //   <polyline points="9.6 14.6 12 17 14.4 14.6"/>
-  // </svg>`,
+  award: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+    fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="9" r="7"/>
+    <polyline points="9 14.2 12 22 15 14.2"/>
+    <polyline points="9.6 14.6 12 17 14.4 14.6"/>
+  </svg>`,
 
   mail: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
     fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
