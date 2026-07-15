@@ -11,9 +11,7 @@
     "api_base": "https://api.github.com",
     "contribution_graph": "https://ghchart.rshah.org/zeovarince",
     "snake_dark": "https://raw.githubusercontent.com/zeovarince/rielz-code/output/github-contribution-grid-snake-dark.svg",
-    "pacman": "https://raw.githubusercontent.com/zeovarince/rielz-code/output/pacman-contribution-graph.svg",
-    "stats_card": "https://github-readme-stats.vercel.app/api?username=zeovarince&show_icons=true&theme=dark&hide_border=true&bg_color=0C0C0C&title_color=D7E2EA&text_color=D7E2EA&icon_color=a855f7",
-    "lang_card": "https://github-readme-stats.vercel.app/api/top-langs/?username=zeovarince&layout=compact&theme=dark&hide_border=true&bg_color=0C0C0C&title_color=D7E2EA&text_color=D7E2EA"
+    "pacman": "https://raw.githubusercontent.com/zeovarince/rielz-code/output/pacman-contribution-graph.svg"
   },
   "techstack": [
     { "name": "HTML5",      "icon": "devicon-html5-plain",         "color": "#E34F26" },
