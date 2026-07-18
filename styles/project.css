@@ -190,6 +190,16 @@
   flex-shrink: 0;
 }
 
+.proj-slide__footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.proj-slide__github--demo {
+  color: #c084fc;
+}
+
 .proj-slide__github:hover {
   background: rgba(255, 255, 255, 0.2);
   transform: scale(1.08);

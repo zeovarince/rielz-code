@@ -59,8 +59,7 @@ function buildFooterHTML(profile) {
         <div class="footer-left">
           <p class="footer-name">${name}</p>
           <p class="footer-copy">
-            &copy; ${year} ${fullName}.<br>
-            <span class="footer-copy--dim">Built with HTML + Tailwind + Vanilla JS</span>
+            &copy; ${year} ${fullName}
           </p>
         </div>
 

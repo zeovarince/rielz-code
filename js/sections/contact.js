@@ -187,8 +187,6 @@ function initContactForm() {
   const status = document.getElementById('cf-status');
 
   if (!form) return;
-
-  // ── Ganti 3 nilai ini dengan milik kamu dari emailjs.com ──
   const EMAILJS_PUBLIC_KEY  = 'R-QMAjmFaYrKMCKPZ';
   const EMAILJS_SERVICE_ID  = 'service_u8fcxwb';
   const EMAILJS_TEMPLATE_ID = 'template_u67ie7f';

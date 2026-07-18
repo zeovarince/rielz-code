@@ -18,6 +18,12 @@ const ICON_NEXT = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" s
 /* ── Helpers ── */
 function pad(n) { return String(n).padStart(2, '0'); }
 
+function normalizeUrl(url) {
+  if (!url) return '';
+  if (/^https?:\/\//i.test(url)) return url;
+  return `https://${url}`;
+}
+
 function buildMoreLink(githubUrl) {
   if (!githubUrl) return '';
 
@@ -38,6 +44,7 @@ function buildLeft(project) {
   const src     = project.images?.[0] || project.thumbnail || null;
   const techs   = (project.tech || []).slice(0, 3)
     .map(t => `<span class="proj-slide__ft">${t}</span>`).join('');
+  const demoUrl = normalizeUrl(project.demo_url || project.live_url);
 
   return `
     <div class="proj-slide__card">
@@ -53,13 +60,22 @@ function buildLeft(project) {
             <div class="proj-slide__footer-techs">${techs}</div>
             <h3 class="proj-slide__footer-title">${project.title}</h3>
           </div>
-          ${project.github_url
-            ? `<a href="${project.github_url}" target="_blank" rel="noopener noreferrer"
-                 class="proj-slide__github" title="Source Code" aria-label="Source Code">
-                 ${ICON_GITHUB}
-               </a>`
-            : ''
-          }
+          <div class="proj-slide__footer-actions">
+            ${project.github_url
+              ? `<a href="${project.github_url}" target="_blank" rel="noopener noreferrer"
+                   class="proj-slide__github" title="Source Code" aria-label="Source Code">
+                   ${ICON_GITHUB}
+                 </a>`
+              : ''
+            }
+            ${demoUrl
+              ? `<a href="${demoUrl}" target="_blank" rel="noopener noreferrer"
+                   class="proj-slide__github proj-slide__github--demo" title="Live Demo" aria-label="Live Demo">
+                   ${ICON_EXTERNAL}
+                 </a>`
+              : ''
+            }
+          </div>
         </div>
       </div>
     </div>
@@ -85,8 +101,10 @@ function buildContent(project, index, total) {
        </a>`
     : '';
 
-  const btnLive = project.live_url
-    ? `<a href="${project.live_url}" target="_blank" rel="noopener noreferrer"
+  const demoUrl = normalizeUrl(project.demo_url || project.live_url);
+
+  const btnLive = demoUrl
+    ? `<a href="${demoUrl}" target="_blank" rel="noopener noreferrer"
           class="proj-slider__btn proj-slider__btn--live">
           ${ICON_EXTERNAL} Live Demo
        </a>`

@@ -1,6 +1,24 @@
 [
   {
     "id": 1,
+    "slug": "data-mining",
+    "title": "Data Mining",
+    "subtitle": "Implementasi & Materi Penambangan Data",
+    "description": "Kumpulan materi dan implementasi algoritma klasifikasi serta regresi dalam Data Mining, dikemas dalam bentuk situs dokumentasi interaktif.",
+    "long_description": "Proyek pembelajaran Data Mining yang mencakup implementasi berbagai algoritma seperti K-Nearest Neighbors (KNN), Naive Bayes, Decision Tree, Random Forest, dan Regresi. Repositori ini juga memuat eksplorasi dataset (seperti IRIS, Play Tennis, dan Obesity Dataset) serta visualisasi datanya.",
+    "thumbnail": "/assets/images/projects/pendat.png",
+    "images": [],
+    "tech": ["Python", "Jupyter Book", "Machine Learning", "Sphinx"],
+    "category": "Data Science",
+    "year": "2026",
+    "status": "completed",
+    "github_url": "https://github.com/zeovarince/PenData",
+    "demo_url": "https://zeovarince.github.io/PenData/",
+    "featured": true,
+    "order": 1
+  },
+  {
+    "id": 2,
     "slug": "study-hub",
     "title": "StudyHub",
     "subtitle": "Platform kolaborasi belajar real-time",
@@ -15,11 +33,12 @@
     "year": "2026",
     "status": "completed",
     "github_url": "https://github.com/zeovarince/study-hub",
+    "demo_url": "study-hub.my.id",
     "featured": true,
-    "order": 1
+    "order": 2
   },
   {
-    "id": 2,
+    "id": 3,
     "slug": "Onic-cinema",
     "title": "Onic Cinema",
     "subtitle": "Pemesanan Tiket Bioskop",
@@ -27,16 +46,16 @@
     "long_description": "Sistem pemesanan tiket biosko berbasis web menggunakan PHP native dan MySQL untuk mengelola pemesanan tiket bioskop dan manajemen pendapatan. Didesain dengan estetika VS Code dark-mode dan fitur manajemen lengkap untuk custommer dan admin.",
     "thumbnail": "/assets/images/projects/oniccinema.png",
     "images": [],
-    "tech": ["PHP", "MySQL","CSS", "Tailwind" , "Chart.js"],
+    "tech": ["PHP", "MySQL", "CSS", "Tailwind", "Chart.js"],
     "category": "Web Application",
     "year": "2024",
     "status": "completed",
     "github_url": "https://github.com/zeovarince/PAW-Bioskop",
     "featured": false,
-    "order": 2
+    "order": 3
   },
   {
-    "id": 3,
+    "id": 4,
     "slug": "upabk-portal",
     "title": "UPA-BK UTM Portal",
     "subtitle": "Portal konseling digital UTM",
@@ -50,10 +69,10 @@
     "status": "completed",
     "github_url": "https://github.com/zeovarince/project-upabkutm",
     "featured": false,
-    "order": 3
+    "order": 4
   },
   {
-    "id": 4,
+    "id": 5,
     "slug": "scholarsearch-id",
     "title": "ScholarSearch ID",
     "subtitle": "Search Engine Akademik & Publikasi Ilmiah",
@@ -67,6 +86,6 @@
     "status": "completed",
     "github_url": "https://github.com/zeovarince/ScholarSearchID",
     "featured": true,
-    "order": 4
+    "order": 5
   }
 ]
