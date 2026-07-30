@@ -3,16 +3,16 @@
  *
  * Desktop : fixed kanan tengah, vertikal
  * Mobile  : fixed bawah tengah, horizontal
- * Icon    : Lucide SVG inline (tidak pakai library / emoji)
+ * Icon    : Lucide SVG inline
  * Active  : IntersectionObserver — highlight section yang sedang dilihat
  * Click   : smooth scroll ke section
+ *
  */
 
 import { scrollToSection } from '../utils/helper.js';
 
 /* ─────────────────────────────────────────────
-   LUCIDE SVG ICONS — inline, no dependency
-   Semua viewBox 24x24, stroke-based
+   ICONS
 ───────────────────────────────────────────── */
 const ICONS = {
   home: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
@@ -58,22 +58,22 @@ const ICONS = {
       A3.37 3.37 0 0 0 9 18.13V22"/>
   </svg>`,
 
+  mail: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+    fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2" y="4" width="20" height="16" rx="2"/>
+    <path d="M2 7l10 7 10-7"/>
+  </svg>`,
+
   award: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
     fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="12" cy="9" r="7"/>
     <polyline points="9 14.2 12 22 15 14.2"/>
     <polyline points="9.6 14.6 12 17 14.4 14.6"/>
   </svg>`,
-
-  mail: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-    fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="2" y="4" width="20" height="16" rx="2"/>
-    <path d="M2 7l10 7 10-7"/>
-  </svg>`,
 };
 
 /* ─────────────────────────────────────────────
-   BUILD HTML
+   BUILD HTML — Dock utama (scroll nav)
 ───────────────────────────────────────────── */
 function buildDockHTML(navItems) {
   const items = navItems.map((item) => {
@@ -97,11 +97,36 @@ function buildDockHTML(navItems) {
 }
 
 /* ─────────────────────────────────────────────
+   BUILD HTML — Dock Certificates (terpisah)
+   Panel sendiri di bawah dock utama,
+   hanya satu tombol → navigasi ke certificates.html
+───────────────────────────────────────────── */
+function buildCertDockHTML() {
+  return `
+    <nav id="cert-dock-widget" aria-label="Halaman Sertifikat">
+      <ul class="cert-dock-widget-list">
+        <li>
+          <a
+            href="./certificates.html"
+            class="cert-dock-widget-btn"
+            aria-label="Certificates"
+            title="Certificates"
+          >
+            <span class="dock-icon">${ICONS.award}</span>
+            <span class="dock-tooltip">Certificates</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  `;
+}
+
+/* ─────────────────────────────────────────────
    ACTIVE STATE via IntersectionObserver
 ───────────────────────────────────────────── */
 function initActiveObserver(navItems) {
   const sectionIds = navItems.map((n) => n.id);
-  const activeMap  = new Map(); // id → isIntersecting
+  const activeMap  = new Map();
 
   const observer = new IntersectionObserver(
     (entries) => {
@@ -109,22 +134,16 @@ function initActiveObserver(navItems) {
         activeMap.set(entry.target.id, entry.isIntersecting);
       });
 
-      // Cari section pertama yang sedang terlihat
       let currentId = null;
       for (const id of sectionIds) {
         if (activeMap.get(id)) { currentId = id; break; }
       }
 
-      // Update class active
       document.querySelectorAll('.dock-item').forEach((btn) => {
-        const isActive = btn.dataset.target === currentId;
-        btn.classList.toggle('dock-item--active', isActive);
+        btn.classList.toggle('dock-item--active', btn.dataset.target === currentId);
       });
     },
-    {
-      threshold: 0.25,
-      rootMargin: '0px 0px -20% 0px',
-    }
+    { threshold: 0.25, rootMargin: '0px 0px -20% 0px' }
   );
 
   sectionIds.forEach((id) => {
@@ -139,8 +158,7 @@ function initActiveObserver(navItems) {
 function initClickHandlers() {
   document.querySelectorAll('.dock-item').forEach((btn) => {
     btn.addEventListener('click', () => {
-      const targetId = btn.dataset.target;
-      scrollToSection(targetId, 0);
+      scrollToSection(btn.dataset.target, 0);
     });
   });
 }
@@ -155,7 +173,13 @@ export function initNavbar(config) {
   const navItems = config?.nav || [];
   if (!navItems.length) return;
 
+  // Dock utama
   dock.innerHTML = buildDockHTML(navItems);
+
+  // Dock Certificates — sisipkan setelah #floating-dock di DOM
+  const certWidget = document.createElement('div');
+  certWidget.innerHTML = buildCertDockHTML();
+  dock.parentNode.insertBefore(certWidget.firstElementChild, dock.nextSibling);
 
   initActiveObserver(navItems);
   initClickHandlers();

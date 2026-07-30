@@ -1,362 +1,673 @@
 /* ==========================================================================
-   CERTIFICATES.CSS — List kiri, CardSwap kanan, PDF render
+   CERTIFICATES.CSS — Halaman certificates.html
+   Layout 3-kolom: Sidebar | List | PDF Viewer
+   Pakai design tokens dari globals.css (sudah di-load via main.css di index,
+   di sini didefinisikan ulang karena cert page standalone)
    ========================================================================== */
 
-.cert-header { margin-bottom: clamp(2rem, 4vw, 3.5rem); }
+/* ── Cursor (sama seperti index) ── */
+#cursor-dot {
+  position: fixed;
+  width: 8px; height: 8px;
+  background: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: var(--z-cursor);
+  transition: width .15s, height .15s;
+}
+#cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: calc(var(--z-cursor) - 1);
+  transition: width .2s, height .2s;
+}
 
-.cert-label {
-  display: block;
+/* ── Base body override untuk halaman standalone ── */
+body {
+  overflow: hidden;
+  cursor: none;
+}
+
+/* ════════════════════════════════════════════
+   DOCK WIDGET — panel award terpisah
+   Posisi: fixed kanan, di bawah dock index
+   Tidak ada di index, hanya di halaman ini
+════════════════════════════════════════════ */
+#cert-dock-widget {
+  position: fixed;
+  right: 1.5rem;
+  top: calc(50% + 11.5rem + 0.75rem);
+  z-index: var(--z-nav);
+  animation: certDockIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: 0.3s;
+}
+@keyframes certDockIn {
+  from { opacity: 0; transform: translateX(14px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.cert-dock-widget-list {
+  list-style: none;
+  padding: 0.5rem 0.45rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.1rem;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+.cert-dock-widget-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 0.85rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background  var(--transition-base),
+    color       var(--transition-base),
+    transform   var(--transition-base);
+  outline: none;
+}
+.cert-dock-widget-btn:hover {
+  background: rgba(168, 85, 247, 0.12);
+  color: #c084fc;
+  transform: scale(1.12);
+}
+.cert-dock-widget-btn .dock-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.cert-dock-widget-btn .dock-icon svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  stroke: currentColor;
+}
+/* Tooltip ke kiri */
+.cert-dock-widget-btn .dock-tooltip {
+  position: absolute;
+  right: calc(100% + 0.75rem);
+  top: 50%;
+  transform: translateY(-50%) translateX(6px);
+  white-space: nowrap;
+  font-family: 'Kanit', sans-serif;
   font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  background: rgba(22, 22, 22, 0.95);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 0.5rem;
+  padding: 0.3rem 0.65rem;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity    var(--transition-base),
+    transform  var(--transition-base),
+    visibility var(--transition-base);
+}
+.cert-dock-widget-btn .dock-tooltip::after {
+  content: '';
+  position: absolute;
+  right: -5px; top: 50%;
+  transform: translateY(-50%);
+  border: 5px solid transparent;
+  border-left-color: rgba(255,255,255,0.1);
+  border-right: none;
+}
+.cert-dock-widget-btn:hover .dock-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
+}
+
+/* ════════════════════════════════════════════
+   LAYOUT 3-KOLOM FULL VIEWPORT
+════════════════════════════════════════════ */
+.cp-layout {
+  display: grid;
+  grid-template-columns: 240px 320px 1fr;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* ════════════════════════════════════════════
+   KOLOM 1 — SIDEBAR
+════════════════════════════════════════════ */
+.cp-sidebar {
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-subtle);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.cp-sidebar__inner {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.5rem;
+  gap: 2rem;
+  height: 100%;
+  overflow-y: auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* glow dekoratif */
+.cp-sidebar__glow {
+  position: absolute;
+  bottom: -80px; left: -60px;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(168,85,247,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  animation: sbGlow 6s ease-in-out infinite;
+}
+@keyframes sbGlow {
+  0%, 100% { opacity: .5; transform: scale(1); }
+  50%       { opacity: 1;  transform: scale(1.2); }
+}
+
+/* brand */
+.cp-brand__path {
+  font-size: 0.62rem;
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #a855f7;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.45rem;
 }
-
-.cert-heading {
+.cp-brand__title {
   font-family: 'Kanit', sans-serif;
-  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  font-size: 2rem;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: -0.02em;
   line-height: 1;
-  background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
+  background: linear-gradient(180deg, #bbccd7 0%, #646973 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  color: transparent;
+  margin-bottom: 0.4rem;
+}
+.cp-brand__sub {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 
-/* ── Content grid: list kiri, card kanan ── */
-.cert-content {
-  display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: clamp(2.5rem, 5vw, 5rem);
-  align-items: center;
+/* filter */
+.cp-filter__label {
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--text-dim);
+  margin-bottom: 0.55rem;
 }
-
-/* ════════════════════════════
-   KIRI — List
-════════════════════════════ */
-.cert-list {
+.cp-filter__pills {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  max-height: 520px;
-  overflow-y: auto;
-  padding-right: 0.25rem;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(168,85,247,0.3) transparent;
+  gap: 0.3rem;
 }
-.cert-list::-webkit-scrollbar       { width: 3px; }
-.cert-list::-webkit-scrollbar-track { background: transparent; }
-.cert-list::-webkit-scrollbar-thumb { background: rgba(168,85,247,0.3); border-radius:999px; }
-
-.cert-list-item {
+.cp-pill {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem 1.1rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-subtle);
-  background: rgba(255,255,255,0.02);
+  padding: 0.48rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-muted);
   cursor: pointer;
-  transition: background var(--transition-base), border-color var(--transition-base), transform var(--transition-base);
-  outline: none;
+  text-align: left;
+  transition: all var(--transition-base);
+}
+.cp-pill:hover {
+  background: rgba(255,255,255,0.04);
+  color: var(--text-primary);
+}
+.cp-pill--active {
+  background: rgba(168,85,247,0.1);
+  border-color: rgba(168,85,247,0.25);
+  color: #c084fc;
+}
+.cp-pill__badge {
+  font-size: 0.58rem;
+  font-weight: 700;
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--radius-full);
+  background: rgba(168,85,247,0.12);
+  color: rgba(168,85,247,0.8);
+  min-width: 1.3rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+.cp-pill--active .cp-pill__badge {
+  background: rgba(168,85,247,0.25);
+  color: #a855f7;
 }
 
-.cert-list-item:hover {
-  background: rgba(168,85,247,0.06);
-  border-color: rgba(168,85,247,0.2);
-  transform: translateX(4px);
+/* ════════════════════════════════════════════
+   KOLOM 2 — LIST
+════════════════════════════════════════════ */
+.cp-list-col {
+  border-right: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg-primary);
 }
-
-.cert-list-item:focus-visible {
-  border-color: rgba(168,85,247,0.4);
-  box-shadow: 0 0 0 2px rgba(168,85,247,0.15);
-}
-
-.cert-list-item--active {
-  background: rgba(168,85,247,0.1) !important;
-  border-color: rgba(168,85,247,0.35) !important;
-  transform: translateX(4px);
-}
-
-.cert-list-item__left {
+.cp-list-header {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
-  min-width: 0;
+  justify-content: space-between;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+.cp-list-header__label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+}
+.cp-list-header__count {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #a855f7;
+  background: rgba(168,85,247,0.1);
+  padding: 0.12rem 0.5rem;
+  border-radius: var(--radius-full);
+}
+.cp-list {
   flex: 1;
+  overflow-y: auto;
+  padding: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 
-.cert-list-item__num {
+/* item list */
+.cp-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: 0.9rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: rgba(255,255,255,0.01);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition:
+    background     var(--transition-base),
+    border-color   var(--transition-base),
+    transform      var(--transition-base);
+  outline: none;
+}
+/* accent bar kiri */
+.cp-item::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 15%; bottom: 15%;
+  width: 2px;
+  background: linear-gradient(180deg, #a855f7, #ec4899);
+  border-radius: 0 2px 2px 0;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+.cp-item:hover {
+  background: rgba(168,85,247,0.05);
+  border-color: rgba(168,85,247,0.15);
+  transform: translateX(2px);
+}
+.cp-item:hover::before { opacity: .6; }
+.cp-item:focus-visible {
+  border-color: rgba(168,85,247,0.4);
+  box-shadow: 0 0 0 2px rgba(168,85,247,0.1);
+}
+.cp-item--active {
+  background: rgba(168,85,247,0.08) !important;
+  border-color: rgba(168,85,247,0.28) !important;
+  transform: translateX(2px);
+}
+.cp-item--active::before { opacity: 1 !important; }
+
+.cp-item__num {
   font-family: 'Kanit', sans-serif;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   font-weight: 700;
   color: var(--text-dim);
   flex-shrink: 0;
-  width: 1.4rem;
+  padding-top: 2px;
+  width: 1.3rem;
+  text-align: right;
   transition: color var(--transition-fast);
 }
-.cert-list-item--active .cert-list-item__num { color: #a855f7; }
+.cp-item--active .cp-item__num,
+.cp-item:hover   .cp-item__num { color: #a855f7; }
 
-.cert-list-item__info { min-width: 0; flex: 1; }
-
-.cert-list-item__title {
+.cp-item__body { flex: 1; min-width: 0; }
+.cp-item__title {
   font-family: 'Kanit', sans-serif;
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-primary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.3;
+  margin-bottom: 0.4rem;
   transition: color var(--transition-fast);
 }
-.cert-list-item--active .cert-list-item__title,
-.cert-list-item:hover   .cert-list-item__title { color: #c084fc; }
+.cp-item--active .cp-item__title,
+.cp-item:hover   .cp-item__title { color: #c084fc; }
 
-.cert-list-item__meta {
+.cp-item__meta {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 0.6rem;
-  margin-top: 0.2rem;
+  gap: 0.4rem 0.7rem;
 }
-.cert-list-item__meta span {
-  display: inline-flex;
+.cp-item__issuer {
+  display: flex;
   align-items: center;
   gap: 0.3rem;
-  font-size: 0.64rem;
-  color: var(--text-dim);
+  font-size: 0.67rem;
+  color: var(--text-muted);
 }
-.cert-list-item__meta svg { color: rgba(168,85,247,0.5); flex-shrink:0; }
-
-.cert-list-item__right {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-shrink: 0;
-}
-
-.cert-list-item__cat {
-  font-size: 0.58rem;
-  font-weight: 600;
+.cp-item__issuer svg { opacity: .45; flex-shrink: 0; }
+.cp-item__date { font-size: 0.62rem; color: var(--text-dim); }
+.cp-item__cat {
+  font-size: 0.56rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: #a855f7;
   background: rgba(168,85,247,0.1);
-  border: 1px solid rgba(168,85,247,0.2);
-  padding: 0.15rem 0.5rem;
-  border-radius: 999px;
+  border: 1px solid rgba(168,85,247,0.18);
+  padding: 0.1rem 0.42rem;
+  border-radius: var(--radius-full);
+  margin-left: auto;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-.cert-list-item__chevron {
-  color: var(--text-dim);
+/* ════════════════════════════════════════════
+   KOLOM 3 — PDF VIEWER
+════════════════════════════════════════════ */
+.cp-viewer {
   display: flex;
-  align-items: center;
-  transition: color var(--transition-fast), transform var(--transition-fast);
-}
-.cert-list-item--active .cert-list-item__chevron,
-.cert-list-item:hover   .cert-list-item__chevron {
-  color: #a855f7;
-  transform: translateX(3px);
-}
-
-/* ════════════════════════════
-   KANAN — CardSwap
-════════════════════════════ */
-.cert-swap-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 360px;
-  padding: 3rem 1rem 3rem 2rem;
-  position: relative;
-}
-
-.cert-swap-scene {
-  position: relative;
-}
-
-/* ── Card base ── */
-.cert-swap-card {
-  border: 1px solid rgba(255,255,255,0.09);
+  flex-direction: column;
   background: var(--bg-card);
-  box-shadow:
-    0 20px 60px rgba(0,0,0,0.55),
-    0 0 0 1px rgba(255,255,255,0.03);
-  transition: box-shadow 0.3s ease;
-}
-.cert-swap-card:hover {
-  box-shadow:
-    0 28px 80px rgba(168,85,247,0.2),
-    0 20px 60px rgba(0,0,0,0.55);
-}
-
-/* ── PDF canvas wrap — berhenti tepat di atas footer ── */
-.cert-card-canvas-wrap {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 72px; /* sisakan ruang footer — harus sama dengan FOOTER_H di JS */
   overflow: hidden;
-  background: #1a1a2e;
 }
 
-.cert-card-canvas {
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  /* width & height dikontrol JS */
-}
-
-.cert-card-canvas-loading {
-  position: absolute;
-  inset: 0;
-  background: var(--bg-card);
-}
-
-/* ── Fallback (no image) ── */
-.cert-card-fallback {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 72px; /* sama dengan footer */
+/* toolbar */
+.cp-viewer__toolbar {
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, rgba(168,85,247,0.12), rgba(99,102,241,0.07));
-}
-
-/* ── Footer — panel solid terpisah di bawah ── */
-.cert-swap-card__overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 72px;
-  background: rgba(8, 6, 16, 0.96);
-  border-top: 1px solid rgba(255,255,255,0.07);
-  display: flex;
-  align-items: center;
-  padding: 0 1.1rem 0 1.25rem;
-  pointer-events: none;
-}
-
-/* footer di dalam overlay: judul kiri, tombol kanan */
-.cert-swap-card__footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   gap: 0.75rem;
-  width: 100%;
-  pointer-events: auto;
+  padding: 0 1.25rem;
+  height: 52px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(0,0,0,0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  flex-shrink: 0;
 }
-
-.cert-swap-card__initials {
+.cp-vt__meta { flex: 1; min-width: 0; }
+.cp-vt__title {
   font-family: 'Kanit', sans-serif;
-  font-size: 4rem;
-  font-weight: 900;
-  background: linear-gradient(135deg, #a855f7, #ec4899);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.cert-swap-card__title {
-  font-family: 'Kanit', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 700;
-  color: #fff;
-  line-height: 1.3;
-  margin-bottom: 0.2rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 220px;
+  line-height: 1.2;
 }
-
-.cert-swap-card__issuer {
-  font-size: 0.65rem;
-  color: rgba(255,255,255,0.5);
-  font-weight: 300;
+.cp-vt__issuer {
+  font-size: 0.6rem;
+  color: var(--text-dim);
   text-transform: uppercase;
-  letter-spacing: 0.07em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 220px;
+  letter-spacing: 0.12em;
+}
+.cp-vt__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
 }
 
-/* ── Tombol Lihat PDF ── */
-.cert-view-btn {
+/* control group */
+.cp-ctrl-group {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.22rem;
+}
+.cp-ctrl-val {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  min-width: 2.5rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* icon button */
+.cp-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px; height: 26px;
+  border: none;
+  background: rgba(255,255,255,0.04);
+  border-radius: 5px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    color      var(--transition-fast);
+  flex-shrink: 0;
+}
+.cp-icon-btn:hover:not(:disabled) {
+  background: rgba(255,255,255,0.1);
+  color: var(--text-primary);
+}
+.cp-icon-btn:disabled { opacity: .3; cursor: default; }
+
+/* buka PDF button */
+.cp-btn-open {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(168,85,247,0.35);
+  background: rgba(168,85,247,0.1);
+  color: #c084fc;
+  font-size: 0.63rem;
+  font-weight: 700;
   font-family: 'Kanit', sans-serif;
-  font-size: 0.68rem;
-  font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  padding: 0.45rem 1rem;
-  border-radius: 999px;
-  border: 1px solid rgba(168,85,247,0.4);
-  background: rgba(168,85,247,0.15);
-  color: #c084fc;
   cursor: pointer;
-  flex-shrink: 0;
   white-space: nowrap;
-  transition: background 0.2s, border-color 0.2s, transform 0.2s;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  transition: all var(--transition-base);
 }
-.cert-view-btn:hover {
-  background: rgba(168,85,247,0.28);
-  border-color: rgba(168,85,247,0.65);
+.cp-btn-open:hover {
+  background: rgba(168,85,247,0.2);
+  border-color: rgba(168,85,247,0.6);
   transform: translateY(-1px);
 }
 
-/* Skeleton shimmer */
-.skeleton {
+/* viewer body */
+.cp-viewer__body {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+}
+
+/* empty state */
+.cp-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  pointer-events: none;
+}
+.cp-empty__icon {
+  width: 60px; height: 60px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dim);
+  background: rgba(255,255,255,0.02);
+}
+.cp-empty__title {
+  font-family: 'Kanit', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+.cp-empty__sub {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+  max-width: 200px;
+}
+
+/* canvas wrap */
+.cp-canvas-wrap {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.06),
+    0 20px 70px rgba(0,0,0,0.7);
+  transition: opacity .25s ease;
+}
+.cp-canvas-wrap.cp-loading { opacity: 0; }
+.cp-canvas-wrap.cp-ready   { opacity: 1; }
+#pdf-canvas { display: block; }
+
+/* skeleton shimmer */
+.cp-canvas-skel {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  z-index: 2;
+  pointer-events: none;
   background: linear-gradient(
     90deg,
-    rgba(255,255,255,0.04) 0%,
+    rgba(255,255,255,0.03) 0%,
     rgba(255,255,255,0.09) 50%,
-    rgba(255,255,255,0.04) 100%
+    rgba(255,255,255,0.03) 100%
   );
   background-size: 200% 100%;
-  animation: skeletonShimmer 1.6s ease-in-out infinite;
+  animation: cpSkel 1.5s ease-in-out infinite;
 }
-@keyframes skeletonShimmer {
+@keyframes cpSkel {
   0%   { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
+.cp-canvas-skel.hidden { display: none; }
 
-/* ════════════════
+/* status bar */
+.cp-viewer__statusbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.38rem 1.25rem;
+  border-top: 1px solid var(--border-subtle);
+  background: rgba(0,0,0,0.2);
+  flex-shrink: 0;
+}
+.cp-viewer__statusbar span {
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ════════════════════
    RESPONSIVE
-════════════════ */
-@media (max-width: 1024px) {
-  .cert-content {
-    grid-template-columns: 1fr 1fr;
-    gap: 2.5rem;
+════════════════════ */
+@media (max-width: 1100px) {
+  body { overflow: auto; }
+  .cp-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 85vh;
+    height: auto; width: 100%;
+  }
+  .cp-sidebar  { border-right: none; border-bottom: 1px solid var(--border-subtle); }
+  .cp-list-col { border-right: none; border-bottom: 1px solid var(--border-subtle); max-height: 50vh; }
+  .cp-viewer   { height: 85vh; }
+
+  /* dock widget mobile: kanan bawah */
+  #cert-dock-widget {
+    right: 1.25rem;
+    top: auto;
+    bottom: 1.25rem;
+  }
+  .cert-dock-widget-btn .dock-tooltip {
+    right: auto;
+    left: 50%;
+    top: auto;
+    bottom: calc(100% + 0.6rem);
+    transform: translateX(-50%) translateY(-4px);
+  }
+  .cert-dock-widget-btn .dock-tooltip::after {
+    right: auto; left: 50%;
+    top: auto; bottom: -5px;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: rgba(255,255,255,0.1);
+    border-bottom: none; border-left: none;
+  }
+  .cert-dock-widget-btn:hover .dock-tooltip {
+    transform: translateX(-50%) translateY(0);
   }
 }
 
-@media (max-width: 768px) {
-  .cert-content {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  /* Mobile: card dulu, list di bawah */
-  .cert-content { grid-template-rows: auto auto; }
-  .cert-swap-wrap { order: -1; min-height: 260px; padding: 2rem 0.5rem; }
-
-  .cert-list { max-height: none; }
+@media (max-width: 640px) {
+  .cp-vt__controls { gap: 0.2rem; }
+  .cp-btn-open { padding: 0.3rem 0.65rem; font-size: 0.58rem; }
 }

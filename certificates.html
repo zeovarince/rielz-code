@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <title>Certificates</title>
+  <meta name="description" content="Koleksi sertifikat dan kredensial A. Choiril Anwar El-Asfihani Risydan." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="64x64" href="./assets/icons/favicon_128x128.png" />
+
+  <!-- PDF.js (harus load sebelum module) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+  <!-- CSS khusus halaman ini saja -->
+  <link rel="stylesheet" href="./styles/main.css" />
+
+  <meta name="theme-color" content="#0C0C0C" />
+</head>
+
+<body>
+
+  <!-- ── Custom cursor (sama persis index.html) ── -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <nav id="cert-dock-widget" aria-label="Navigasi sertifikat">
+    <ul class="cert-dock-widget-list">
+
+      <!-- Kembali ke portofolio -->
+      <li>
+        <a href="./index.html"
+           class="cert-dock-widget-btn"
+           aria-label="Kembali ke Portofolio"
+           title="Kembali ke Portofolio">
+          <span class="dock-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+              <polyline points="9 21 9 12 15 12 15 21"/>
+            </svg>
+          </span>
+          <span class="dock-tooltip">Portofolio</span>
+        </a>
+      </li>
+
+    </ul>
+  </nav>
+
+  <!-- ══ LAYOUT 3 KOLOM ══ -->
+  <div class="cp-layout">
+
+    <!-- ─── KOLOM 1: SIDEBAR ─── -->
+    <aside class="cp-sidebar">
+      <div class="cp-sidebar__inner">
+
+        <div class="cp-brand">
+          <p class="cp-brand__path">~/certificates</p>
+          <h1 class="cp-brand__title">Credentials</h1>
+          <p class="cp-brand__sub" id="sb-count">memuat…</p>
+        </div>
+
+        <div class="cp-filter">
+          <p class="cp-filter__label">Kategori</p>
+          <div class="cp-filter__pills" id="filter-pills">
+            <!-- diisi JS -->
+          </div>
+        </div>
+
+        <div class="cp-sidebar__glow" aria-hidden="true"></div>
+      </div>
+    </aside>
+
+    <!-- ─── KOLOM 2: LIST ─── -->
+    <div class="cp-list-col">
+      <div class="cp-list-header">
+        <span class="cp-list-header__label" id="list-label">Semua</span>
+        <span class="cp-list-header__count" id="list-count">0</span>
+      </div>
+      <div class="cp-list" id="cert-list" role="listbox" aria-label="Daftar sertifikat">
+        <!-- diisi JS -->
+      </div>
+    </div>
+
+    <!-- ─── KOLOM 3: PDF VIEWER ─── -->
+    <div class="cp-viewer">
+
+      <!-- Toolbar -->
+      <div class="cp-viewer__toolbar">
+        <div class="cp-vt__meta">
+          <p class="cp-vt__title"  id="vt-title">Pilih sertifikat</p>
+          <p class="cp-vt__issuer" id="vt-issuer">—</p>
+        </div>
+        <div class="cp-vt__controls">
+
+          <!-- Zoom -->
+          <div class="cp-ctrl-group">
+            <button class="cp-icon-btn" id="zoom-out" title="Perkecil (Ctrl+Scroll)" disabled>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+            </button>
+            <span class="cp-ctrl-val" id="zoom-val">100%</span>
+            <button class="cp-icon-btn" id="zoom-in" title="Perbesar (Ctrl+Scroll)" disabled>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5"  y1="12" x2="19" y2="12"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Page nav -->
+          <div class="cp-ctrl-group">
+            <button class="cp-icon-btn" id="page-prev" title="Halaman sebelumnya (←)" disabled>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"/>
+              </svg>
+            </button>
+            <span class="cp-ctrl-val" id="page-info" style="min-width:3rem">—</span>
+            <button class="cp-icon-btn" id="page-next" title="Halaman berikutnya (→)" disabled>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Buka PDF di tab baru -->
+          <button class="cp-btn-open" id="btn-open" style="display:none">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/>
+              <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+            Buka PDF
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Area render PDF -->
+      <div class="cp-viewer__body" id="viewer-body">
+
+        <!-- Empty state -->
+        <div class="cp-empty" id="viewer-empty">
+          <div class="cp-empty__icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+            </svg>
+          </div>
+          <p class="cp-empty__title">Belum ada yang dipilih</p>
+          <p class="cp-empty__sub">Klik sertifikat di sebelah kiri untuk melihat dokumen</p>
+        </div>
+
+        <!-- Canvas PDF -->
+        <div class="cp-canvas-wrap" id="canvas-wrap" style="display:none">
+          <div class="cp-canvas-skel" id="canvas-skel"></div>
+          <canvas id="pdf-canvas"></canvas>
+        </div>
+
+      </div>
+
+      <!-- Status bar -->
+      <div class="cp-viewer__statusbar">
+        <span id="status-left">Siap</span>
+        <span id="status-right"></span>
+      </div>
+
+    </div><!-- /cp-viewer -->
+
+  </div><!-- /cp-layout -->
+
+  <!-- Cursor script -->
+  <script>
+  (function () {
+    const dot  = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    if (!dot || !ring) return;
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+    });
+    (function tick() {
+      rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(tick);
+    })();
+    document.addEventListener('mouseover', e => {
+      if (e.target.closest('a,button')) {
+        dot.style.width = '14px'; dot.style.height = '14px';
+        ring.style.width = '50px'; ring.style.height = '50px';
+      }
+    });
+    document.addEventListener('mouseout', e => {
+      if (e.target.closest('a,button')) {
+        dot.style.width = '8px'; dot.style.height = '8px';
+        ring.style.width = '36px'; ring.style.height = '36px';
+      }
+    });
+  })();
+  </script>
+
+  <!-- Controller halaman ini -->
+  <script type="module" src="./js/certificates.js"></script>
+
+</body>
+</html>

@@ -17,7 +17,6 @@ import { initTechStack }    from './sections/techstack.js';
 import { initExperience }   from './sections/experience.js';
 import { initProjects }     from './sections/projects.js';
 import { initGitHub }       from './sections/github.js';
-import { initCertificates } from './sections/certificates.js';
 import { initContact }      from './sections/contact.js';
 
 let appData = null;

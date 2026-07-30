@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
   <!-- SEO -->
-  <title>Riel — Developer Portfolio</title>
+  <title>Riel Developer Portfolio</title>
   <meta name="description" content="Frontend Developer & UI/UX Designer. Membangun pengalaman web modern, interaktif, dan berdampak." />
   <meta name="author" content="A. Choiril Anwar El-Asfihani Risydan" />
   <meta name="keywords" content="portfolio, frontend developer, UI/UX designer, web development, Madura, UTM" />
@@ -54,7 +54,6 @@
   </script>
 
   <link rel="stylesheet" href="./styles/main.css" />
-
   <meta name="theme-color" content="#0C0C0C">
 </head>
 
@@ -91,11 +90,6 @@
             <div class="section-inner"></div>
         </section>
 
-        <!-- Certificates -->
-        <section id="certificates" class="section">
-            <div class="section-inner"></div>
-        </section>
-
         <!-- Contact -->
         <section id="contact"></section>
 
@@ -107,61 +101,32 @@
     <!-- Cursor Script -->
     <script>
     (function(){
-
-      const dot=document.getElementById("cursor-dot");
-      const ring=document.getElementById("cursor-ring");
-
-      if(!dot || !ring) return;
-
-      let mouseX=0;
-      let mouseY=0;
-
-      let ringX=0;
-      let ringY=0;
-
-      document.addEventListener("mousemove",(e)=>{
-          mouseX=e.clientX;
-          mouseY=e.clientY;
-
-          dot.style.left=mouseX+"px";
-          dot.style.top=mouseY+"px";
+      const dot  = document.getElementById("cursor-dot");
+      const ring = document.getElementById("cursor-ring");
+      if (!dot || !ring) return;
+      let mouseX=0, mouseY=0, ringX=0, ringY=0;
+      document.addEventListener("mousemove", (e) => {
+        mouseX=e.clientX; mouseY=e.clientY;
+        dot.style.left=mouseX+"px"; dot.style.top=mouseY+"px";
       });
-
-      function animate(){
-
-          ringX+=(mouseX-ringX)*0.12;
-          ringY+=(mouseY-ringY)*0.12;
-
-          ring.style.left=ringX+"px";
-          ring.style.top=ringY+"px";
-
-          requestAnimationFrame(animate);
+      function animate() {
+        ringX+=(mouseX-ringX)*0.12; ringY+=(mouseY-ringY)*0.12;
+        ring.style.left=ringX+"px"; ring.style.top=ringY+"px";
+        requestAnimationFrame(animate);
       }
-
       animate();
-
-      document.addEventListener("mouseover",(e)=>{
-          if(e.target.closest("a,button")){
-
-              dot.style.width="14px";
-              dot.style.height="14px";
-
-              ring.style.width="50px";
-              ring.style.height="50px";
-          }
+      document.addEventListener("mouseover", (e) => {
+        if (e.target.closest("a,button")) {
+          dot.style.width="14px"; dot.style.height="14px";
+          ring.style.width="50px"; ring.style.height="50px";
+        }
       });
-
-      document.addEventListener("mouseout",(e)=>{
-          if(e.target.closest("a,button")){
-
-              dot.style.width="8px";
-              dot.style.height="8px";
-
-              ring.style.width="36px";
-              ring.style.height="36px";
-          }
+      document.addEventListener("mouseout", (e) => {
+        if (e.target.closest("a,button")) {
+          dot.style.width="8px"; dot.style.height="8px";
+          ring.style.width="36px"; ring.style.height="36px";
+        }
       });
-
     })();
     </script>
 
