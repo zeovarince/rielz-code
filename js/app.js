@@ -5,6 +5,7 @@
 import { fetchAllData } from './utils/fetch.js';
 import { initFadeIn }   from './utils/animation.js';
 import { prefersReducedMotion } from './utils/helper.js';
+import { scrollToSection } from './utils/helper.js';
 
 // Components
 import { initNavbar } from './components/navbar.js';
@@ -18,8 +19,23 @@ import { initExperience }   from './sections/experience.js';
 import { initProjects }     from './sections/projects.js';
 import { initGitHub }       from './sections/github.js';
 import { initContact }      from './sections/contact.js';
+import { initCertificates } from './certificates.js';
 
 let appData = null;
+
+function scrollToInitialHash() {
+  const hash = window.location.hash.replace('#', '');
+  if (!hash) return;
+
+  const target = document.getElementById(hash);
+  if (!target) return;
+
+  window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(() => {
+      scrollToSection(hash, 0);
+    });
+  });
+}
 
 function initModules(data) {
   // Core layout
@@ -48,6 +64,7 @@ async function bootstrap() {
     initModules(appData);
     document.body.classList.add('loaded');
     document.body.classList.remove('loading');
+    scrollToInitialHash();
   } catch (err) {
     console.error('[App] Bootstrap failed:', err);
     // Tetap hapus loading agar halaman tidak blank total

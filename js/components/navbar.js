@@ -75,9 +75,26 @@ const ICONS = {
 /* ─────────────────────────────────────────────
    BUILD HTML — Dock utama (scroll nav)
 ───────────────────────────────────────────── */
-function buildDockHTML(navItems) {
+function buildDockHTML(navItems, isCertificatesPage) {
   const items = navItems.map((item) => {
     const icon = ICONS[item.icon] || ICONS.home;
+    const href = isCertificatesPage ? `./index.html#${item.id}` : null;
+    if (isCertificatesPage) {
+      return `
+        <li>
+          <a
+            class="dock-item"
+            href="${href}"
+            aria-label="${item.label}"
+            title="${item.label}"
+          >
+            <span class="dock-icon">${icon}</span>
+            <span class="dock-tooltip">${item.label}</span>
+          </a>
+        </li>
+      `;
+    }
+
     return `
       <li>
         <button
@@ -101,16 +118,17 @@ function buildDockHTML(navItems) {
    Panel sendiri di bawah dock utama,
    hanya satu tombol → navigasi ke certificates.html
 ───────────────────────────────────────────── */
-function buildCertDockHTML() {
+function buildCertDockHTML(isActive) {
   return `
     <nav id="cert-dock-widget" aria-label="Halaman Sertifikat">
       <ul class="cert-dock-widget-list">
         <li>
           <a
             href="./certificates.html"
-            class="cert-dock-widget-btn"
+            class="cert-dock-widget-btn ${isActive ? 'cert-dock-widget-btn--active' : ''}"
             aria-label="Certificates"
             title="Certificates"
+            ${isActive ? 'aria-current="page"' : ''}
           >
             <span class="dock-icon">${ICONS.award}</span>
             <span class="dock-tooltip">Certificates</span>
@@ -155,10 +173,22 @@ function initActiveObserver(navItems) {
 /* ─────────────────────────────────────────────
    CLICK → SMOOTH SCROLL
 ───────────────────────────────────────────── */
-function initClickHandlers() {
+function initClickHandlers(isCertificatesPage) {
   document.querySelectorAll('.dock-item').forEach((btn) => {
     btn.addEventListener('click', () => {
+      if (isCertificatesPage) {
+        window.location.href = `./index.html#${btn.dataset.target}`;
+        return;
+      }
+
       scrollToSection(btn.dataset.target, 0);
+    });
+  });
+
+  document.querySelectorAll('.cert-dock-widget-btn').forEach((btn) => {
+    btn.addEventListener('click', (event) => {
+      event.preventDefault();
+      window.location.href = btn.getAttribute('href') || './certificates.html';
     });
   });
 }
@@ -173,14 +203,16 @@ export function initNavbar(config) {
   const navItems = config?.nav || [];
   if (!navItems.length) return;
 
+  const isCertificatesPage = /(^|\/)certificates\.html$/i.test(window.location.pathname);
+
   // Dock utama
-  dock.innerHTML = buildDockHTML(navItems);
+  dock.innerHTML = buildDockHTML(navItems, isCertificatesPage);
 
   // Dock Certificates — sisipkan setelah #floating-dock di DOM
   const certWidget = document.createElement('div');
-  certWidget.innerHTML = buildCertDockHTML();
+  certWidget.innerHTML = buildCertDockHTML(isCertificatesPage);
   dock.parentNode.insertBefore(certWidget.firstElementChild, dock.nextSibling);
 
   initActiveObserver(navItems);
-  initClickHandlers();
+  initClickHandlers(isCertificatesPage);
 }

@@ -2,20 +2,18 @@
    TECHSTACK.CSS — Tech Stack Section
    ========================================================================== */
 
-/* ── Section wrapper ── */
+/* ── Section ── */
 #techstack {
   padding: clamp(4rem, 8vw, 10rem) 0;
-  overflow: hidden;
+  overflow: hidden;   /* clip shell saat entrance agar tidak nongol di luar */
   position: relative;
 }
 
-/* Subtle top/bottom separator */
 #techstack::before,
 #techstack::after {
   content: '';
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 0; right: 0;
   height: 1px;
   background: var(--border-subtle);
 }
@@ -60,36 +58,74 @@
   gap: 1.25rem;
 }
 
-/* ── Satu row marquee ── */
-.ts-marquee-wrapper {
+/* ════════════════════════════════════════
+   ENTRANCE SHELLS
+   Menangani slide-in dari kiri/kanan.
+   LTR shell mulai di kiri (translateX(-110%))
+   RTL shell mulai di kanan (translateX(110%))
+   Keduanya slide ke translateX(0) saat .is-visible
+════════════════════════════════════════ */
+
+.ts-row-shell {
+  width: 100%;
+  /* Default: off-screen ke KIRI */
+  transform: translateX(-110%);
+  /* Tidak ada transition sampai .is-visible */
+}
+
+.ts-row-shell--rtl {
+  /* RTL: off-screen ke KANAN */
+  transform: translateX(110%);
+}
+
+/* Kedua class ini ditambahkan di JS tick yang sama → animasi mulai bersamaan */
+.ts-row-shell.is-visible {
+  transform: translateX(0);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ════════════════════════════════════════
+   MARQUEE ROW
+   Overflow clip + edge fade mask
+════════════════════════════════════════ */
+
+.ts-marquee-row {
   overflow: hidden;
-  /* Fade mask kiri & kanan */
+  width: 100%;
+  /* Fade halus di kiri & kanan */
   mask-image: linear-gradient(
     to right,
     transparent 0%,
-    black 8%,
-    black 92%,
+    black 5%,
+    black 95%,
     transparent 100%
   );
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0%,
-    black 8%,
-    black 92%,
+    black 5%,
+    black 95%,
     transparent 100%
   );
 }
 
-/* ── Track (digerakkan JS) ── */
+/* ════════════════════════════════════════
+   MARQUEE TRACK
+   Digerakkan oleh JS via translate3d
+════════════════════════════════════════ */
+
 .ts-marquee-track {
   display: inline-flex;
   align-items: center;
-  gap: 0;
   white-space: nowrap;
   will-change: transform;
+  /* transform diset JS — jangan ada CSS transition di sini */
 }
 
-/* ── Single tech item ── */
+/* ════════════════════════════════════════
+   TECH ITEM
+════════════════════════════════════════ */
+
 .ts-item {
   display: inline-flex;
   align-items: center;
@@ -116,7 +152,6 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
-/* ── Icon ── */
 .ts-item__icon {
   display: flex;
   align-items: center;
@@ -136,7 +171,6 @@
   transform: scale(1.1);
 }
 
-/* ── Nama tech ── */
 .ts-item__name {
   font-family: 'Kanit', sans-serif;
   font-size: 0.9rem;
@@ -150,26 +184,16 @@
   color: var(--text-primary);
 }
 
-/* ══════════════════════════════════════════
+/* ════════════════════════════════════════
    RESPONSIVE
-══════════════════════════════════════════ */
+════════════════════════════════════════ */
 @media (max-width: 768px) {
   .ts-item {
     padding: 0.6rem 1.1rem;
     margin: 0 0.35rem;
     gap: 0.6rem;
   }
-
-  .ts-item__icon {
-    width: 1.6rem;
-    height: 1.6rem;
-  }
-
-  .ts-item__icon i {
-    font-size: 1.3rem;
-  }
-
-  .ts-item__name {
-    font-size: 0.8rem;
-  }
+  .ts-item__icon { width: 1.6rem; height: 1.6rem; }
+  .ts-item__icon i { font-size: 1.3rem; }
+  .ts-item__name { font-size: 0.8rem; }
 }
